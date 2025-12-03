@@ -1,0 +1,58 @@
+﻿@model PedidosManejo.Models.historialpedido
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>historialpedido</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoAnterior)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoAnterior)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoNuevo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoNuevo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCambio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCambio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pedido.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pedido.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuario.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuario.Nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.HistorialID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

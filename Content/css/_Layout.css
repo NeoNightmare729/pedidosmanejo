@@ -1,0 +1,154 @@
+﻿/* ============================= */
+/* Variables de Color */
+/* ============================= */
+:root {
+    --color-naranja: #ff6b35;
+    --color-rojo: #dc3545;
+    --color-negro: #212529;
+    --color-gris: #f8f9fa;
+    --color-blanco: #ffffff;
+    --color-amarillo: #ffc107;
+}
+
+/* ============================= */
+/* Estilos Generales */
+/* ============================= */
+body {
+    background-color: var(--color-gris);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ============================= */
+/* Navbar Personalizada */
+/* ============================= */
+.navbar-custom {
+    background: linear-gradient(135deg, var(--color-rojo) 0%, var(--color-naranja) 100%);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+    .navbar-custom .navbar-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: var(--color-blanco) !important;
+        transition: transform 0.3s ease;
+        letter-spacing: 0.5px;
+    }
+
+        .navbar-custom .navbar-brand:hover {
+            transform: scale(1.05);
+        }
+
+    .navbar-custom .nav-link {
+        color: rgba(255, 255, 255, 0.85) !important;
+        transition: color 0.3s ease, font-weight 0.3s ease;
+        margin: 0 5px;
+        position: relative;
+    }
+
+        .navbar-custom .nav-link:hover {
+            color: var(--color-blanco) !important;
+            font-weight: 500;
+        }
+
+        .navbar-custom .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-amarillo);
+            transition: width 0.3s ease;
+        }
+
+        .navbar-custom .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .navbar-custom .nav-link.active {
+            color: var(--color-amarillo) !important;
+            font-weight: bold;
+        }
+
+    .navbar-custom .navbar-toggler {
+        border-color: rgba(255, 255, 255, 0.5);
+    }
+
+        .navbar-custom .navbar-toggler:focus {
+            box-shadow: 0 0 0 0.25rem rgba(255, 255, 255, 0.25);
+        }
+
+/* ============================= */
+/* Footer Personalizado */
+/* ============================= */
+footer {
+    background: linear-gradient(135deg, var(--color-rojo) 0%, var(--color-naranja) 100%);
+    color: var(--color-blanco);
+    padding: 2rem 0;
+    margin-top: 3rem;
+    border-top: 3px solid var(--color-naranja);
+}
+
+    footer p {
+        margin: 0;
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
+
+    footer a {
+        color: var(--color-amarillo);
+        text-decoration: none;
+        transition: color 0.3s ease, transform 0.3s ease;
+        font-size: 1.3rem;
+        display: inline-block;
+    }
+
+        footer a:hover {
+            color: var(--color-blanco);
+            transform: scale(1.15);
+        }
+
+/* ============================= */
+/* Body Content */
+/* ============================= */
+.body-content {
+    min-height: calc(100vh - 200px);
+    padding: 2rem 0;
+}
+
+/* ============================= */
+/* Efectos Hover General */
+/* ============================= */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .hover-lift:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+
+/* ============================= */
+/* Responsive Adjustments */
+/* ============================= */
+@media (max-width: 576px) {
+    .navbar-custom .navbar-brand {
+        font-size: 1.2rem;
+    }
+
+    .navbar-custom .nav-link {
+        margin: 0.5rem 0;
+    }
+
+    footer {
+        padding: 1.5rem 0;
+    }
+
+        footer p {
+            font-size: 0.85rem;
+        }
+
+    .body-content {
+        padding: 1rem 0;
+    }
+}

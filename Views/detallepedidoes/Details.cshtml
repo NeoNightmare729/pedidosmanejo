@@ -1,0 +1,58 @@
+﻿@model PedidosManejo.Models.detallepedido
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>detallepedido</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrecioUnitario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrecioUnitario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subtotal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subtotal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pedido.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pedido.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.menu.NombrePlato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.menu.NombrePlato)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DetallePedidoID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

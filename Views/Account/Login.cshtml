@@ -1,0 +1,94 @@
+﻿@using PedidosManejo.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Iniciar sesión";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/login.css" rel="stylesheet" />
+
+<!-- =========================== -->
+<!-- HERO SECTION PARA LOGIN -->
+<!-- =========================== -->
+<section class="login-hero">
+    <div class="login-container">
+        <!-- Header del Login -->
+        <div class="login-header">
+            <h1 class="login-title">¡Bienvenido!</h1>
+            <p class="login-subtitle">Ingresa a tu cuenta para continuar</p>
+        </div>
+
+        <!-- Body del Login -->
+        <div class="login-body">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "login-form", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                <!-- Campo Email -->
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Email, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "tu@email.com" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Campo Contraseña -->
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Password, new { @class = "form-label" })
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Ingresa tu contraseña" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+
+                <!-- Recordarme -->
+                <div class="form-check">
+                    @Html.CheckBoxFor(m => m.RememberMe, new { @class = "form-check-input" })
+                    @Html.LabelFor(m => m.RememberMe, new { @class = "form-check-label" })
+                </div>
+
+                <!-- Botón de Login -->
+                <button type="submit" class="btn btn-login">
+                    <i class="bi bi-box-arrow-in-right"></i> Iniciar sesión
+                </button>
+            }
+
+            <!-- Enlaces adicionales -->
+            <div class="login-links">
+                <p>
+                    ¿No tienes una cuenta?
+                    @Html.ActionLink("Regístrate aquí", "Regi  ster", null, new { @class = "register-link" })
+                </p>
+            </div>
+
+            <!-- Separador para login social (opcional) -->
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        // Efectos adicionales con JavaScript
+        $(document).ready(function () {
+            // Efecto de focus en los inputs
+            $('.form-control').on('focus', function () {
+                $(this).parent().addClass('focused');
+            }).on('blur', function () {
+                if ($(this).val() === '') {
+                    $(this).parent().removeClass('focused');
+                }
+            });
+
+            // Validación en tiempo real
+            $('.form-control').on('input', function () {
+                var $this = $(this);
+                if ($this.val().length > 0) {
+                    $this.addClass('has-value');
+                } else {
+                    $this.removeClass('has-value');
+                }
+            });
+        });
+    </script>
+}

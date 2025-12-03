@@ -1,0 +1,99 @@
+﻿@model PedidosManejo.Models.ManageIndexViewModel
+@{
+    ViewBag.Title = "Mi Cuenta";
+}
+
+<link href="~/Content/css/manage.css" rel="stylesheet" />
+
+<!-- =========================== -->
+<!-- HERO SECTION PARA MI CUENTA -->
+<!-- =========================== -->
+<section class="manage-hero bg-dark text-white text-center py-5" style="background: linear-gradient(135deg, #ff6b35 0%, #dc3545 100%);">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-3">Mi Cuenta</h1>
+        <p class="lead fs-5">Gestiona tu información personal y configuración</p>
+    </div>
+</section>
+
+<!-- =========================== -->
+<!-- INFORMACIÓN DEL USUARIO -->
+<!-- =========================== -->
+<section class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-lg rounded-3">
+                <div class="card-header bg-transparent border-0 py-4">
+                    <h3 class="card-title fw-bold text-center mb-0">Información Personal</h3>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-4">
+                        <!-- Nombre -->
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <label class="form-label fw-bold text-muted small">Nombre</label>
+                                <p class="info-value fs-5 fw-semibold">@Model.Nombre</p>
+                            </div>
+                        </div>
+
+                        <!-- Correo Electrónico -->
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <label class="form-label fw-bold text-muted small">Correo Electrónico</label>
+                                <p class="info-value fs-5 fw-semibold">@Model.CorreoElectronico</p>
+                            </div>
+                        </div>
+
+                        <!-- Fecha de Registro -->
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <label class="form-label fw-bold text-muted small">Fecha de Registro</label>
+                                <p class="info-value fs-5 fw-semibold">
+                                    @(Model.FechaRegistro?.ToString("dd/MM/yyyy") ?? "No disponible")
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Rol -->
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <label class="form-label fw-bold text-muted small">Rol</label>
+                                <p class="info-value fs-5 fw-semibold">@Model.Rol</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =========================== -->
+    <!-- ACCIONES RÁPIDAS -->
+    <!-- =========================== -->
+    <div class="row justify-content-center mt-4">
+        <div class="col-lg-8">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <a href="@Url.Action("ChangePassword", "Manage")" class="btn btn-outline-danger btn-lg w-100 py-3 rounded-3 shadow-sm">
+                        <i class="bi bi-shield-lock"></i> Cambiar Contraseña
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Efectos hover para las tarjetas
+            $('.card').hover(
+                function () {
+                    $(this).addClass('shadow-lg');
+                },
+                function () {
+                    $(this).removeClass('shadow-lg');
+                }
+            );
+        });
+    </script>
+}

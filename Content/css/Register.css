@@ -1,0 +1,214 @@
+﻿/* =========================== */
+/* ESTILOS PARA REGISTRO */
+/* =========================== */
+
+.register-hero {
+    background: linear-gradient(135deg, #ff6b35 0%, #dc3545 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.register-container {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    max-width: 600px;
+    width: 100%;
+    margin: 2rem;
+}
+
+.register-header {
+    background: linear-gradient(135deg, #ff6b35 0%, #dc3545 100%);
+    padding: 2.5rem 2rem 2rem;
+    text-align: center;
+    color: white;
+}
+
+.register-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.register-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.register-body {
+    padding: 2.5rem 2rem;
+}
+
+.register-form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.register-form .form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+}
+
+.register-form .form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+    .register-form .form-control:focus {
+        border-color: #ff6b35;
+        box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+        background: #fff;
+    }
+
+.register-form textarea.form-control {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.btn-register {
+    background: linear-gradient(135deg, #ff6b35 0%, #dc3545 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: white;
+    width: 100%;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+    margin-top: 1rem;
+}
+
+    .btn-register:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 107, 53, 0.6);
+    }
+
+    .btn-register:active {
+        transform: translateY(0);
+    }
+
+.register-links {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 2rem;
+    border-top: 1px solid #e9ecef;
+}
+
+.login-link {
+    color: #ff6b35;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+    .login-link:hover {
+        color: #dc3545;
+        text-decoration: underline;
+    }
+
+.home-link {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.back-link {
+    color: #6c757d;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+    .back-link:hover {
+        color: #ff6b35;
+    }
+
+/* Validación de formularios */
+.text-danger {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+.field-validation-error {
+    color: #dc3545;
+    font-size: 0.875rem;
+}
+
+.input-validation-error {
+    border-color: #dc3545 !important;
+}
+
+.validation-summary-errors {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    color: #721c24;
+}
+
+    .validation-summary-errors ul {
+        margin: 0;
+        padding-left: 1rem;
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .register-container {
+        margin: 1rem;
+    }
+
+    .register-header {
+        padding: 2rem 1.5rem 1.5rem;
+    }
+
+    .register-body {
+        padding: 2rem 1.5rem;
+    }
+
+    .register-title {
+        font-size: 2rem;
+    }
+
+    .register-subtitle {
+        font-size: 1rem;
+    }
+
+    .row > div {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .register-title {
+        font-size: 1.75rem;
+    }
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.register-container {
+    animation: fadeInUp 0.6s ease-out;
+}

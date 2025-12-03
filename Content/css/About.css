@@ -1,0 +1,265 @@
+﻿/* Content/css/about.css */
+/* ================================
+   ESTILOS PARA ABOUT US
+   Colores: Naranja (#FB8C00), Rojo (#E53935), Amarillo (#FFC107)
+=================================== */
+
+/* =========================== */
+/* HERO SECTION */
+/* =========================== */
+.about-hero {
+    background: linear-gradient(135deg, #ff6b35 0%, #dc3545 100%) !important;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+    .about-hero::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="%23ffffff" opacity="0.1"><polygon points="1000,100 1000,0 0,100"/></svg>');
+        background-size: cover;
+    }
+
+.hero-stats {
+    margin-top: 3rem;
+}
+
+.stat-item {
+    padding: 1.5rem;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* =========================== */
+/* ABOUT IMAGE PLACEHOLDER */
+/* =========================== */
+.about-image-placeholder {
+    padding: 2rem;
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 200px 150px;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.grid-item {
+    border-radius: 15px;
+    background: linear-gradient(45deg, #FB8C00, #E53935);
+    position: relative;
+    overflow: hidden;
+}
+
+    .grid-item.primary {
+        grid-column: 1 / 3;
+        background: linear-gradient(45deg, #FB8C00, #FFC107);
+    }
+
+    .grid-item.secondary {
+        background: linear-gradient(45deg, #E53935, #FB8C00);
+    }
+
+    .grid-item.tertiary {
+        background: linear-gradient(45deg, #FFC107, #E53935);
+    }
+
+    .grid-item::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="%23ffffff" opacity="0.1"><circle cx="50" cy="50" r="40"/></svg>');
+        background-size: cover;
+    }
+
+/* =========================== */
+/* MISSION ICONS */
+/* =========================== */
+.mission-icon {
+    width: 80px;
+    height: 80px;
+    background: linear-gradient(135deg, #FB8C00, #E53935);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    color: white;
+    font-size: 2rem;
+}
+
+/* =========================== */
+/* RESTAURANT CARDS */
+/* =========================== */
+.restaurant-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .restaurant-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    }
+
+/* =========================== */
+/* PROCESS STEPS */
+/* =========================== */
+.process-step {
+    padding: 2rem 1rem;
+}
+
+.step-number {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #FB8C00, #E53935);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 auto;
+    position: relative;
+}
+
+    .step-number::after {
+        content: '';
+        position: absolute;
+        top: -5px;
+        left: -5px;
+        right: -5px;
+        bottom: -5px;
+        border: 2px solid #FB8C00;
+        border-radius: 50%;
+        opacity: 0.3;
+    }
+
+/* =========================== */
+/* HOVER EFFECTS */
+/* =========================== */
+.hover-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .hover-lift:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.175) !important;
+    }
+
+/* =========================== */
+/* RESPONSIVE DESIGN */
+/* =========================== */
+@media (max-width: 768px) {
+    .about-hero {
+        min-height: 50vh;
+        padding: 3rem 0;
+    }
+
+    .hero-stats {
+        margin-top: 2rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+
+    .image-grid {
+        grid-template-rows: 150px 100px;
+        max-width: 300px;
+    }
+
+    .mission-icon {
+        width: 60px;
+        height: 60px;
+        font-size: 1.5rem;
+    }
+
+    .process-step {
+        padding: 1rem 0.5rem;
+    }
+
+    .step-number {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .about-hero h1 {
+        font-size: 2.5rem;
+    }
+
+    .about-hero .lead {
+        font-size: 1.1rem;
+    }
+
+    .hero-stats .col-6 {
+        margin-bottom: 1rem;
+    }
+
+    .stat-item {
+        padding: 1rem;
+    }
+}
+
+/* =========================== */
+/* ANIMATIONS */
+/* =========================== */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.about-hero,
+.restaurant-card,
+.process-step {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+    .restaurant-card:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .process-step:nth-child(2) {
+        animation-delay: 0.1s;
+    }
+
+    .process-step:nth-child(3) {
+        animation-delay: 0.2s;
+    }
+
+    .process-step:nth-child(4) {
+        animation-delay: 0.3s;
+    }

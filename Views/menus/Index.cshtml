@@ -1,0 +1,340 @@
+﻿@model List<PedidosManejo.Models.menu>
+
+@{
+    ViewBag.Title = "Nuestro Menú Completo";
+    bool esAdministrador = ViewBag.EsAdministrador ?? false;
+}
+<link href="~/Content/css/Menu.css" rel="stylesheet" />
+<link href="~/Content/css/home.css" rel="stylesheet" />
+<link href="~/Content/bootstrap/bootstrap.min.css" rel="stylesheet" />
+
+<!-- =========================== -->
+<!-- HERO DEL MENÚ -->
+<!-- =========================== -->
+<section class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">Nuestro Menú Completo</h1>
+        <p class="hero-subtitle">
+            Descubre todos nuestros platillos preparados con amor y los mejores ingredientes.
+        </p>
+
+        <!-- Botón para administradores -->
+        @if (esAdministrador)
+        {
+            <div class="text-center mt-4">
+                <button type="button" class="btn btn-success btn-lg rounded-pill shadow" data-bs-toggle="modal" data-bs-target="#modalAgregarPlato">
+                    <i class="bi bi-plus-circle"></i> Agregar Nuevo Plato
+                </button>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- =========================== -->
+<!-- FILTROS / CATEGORÍAS -->
+<!-- =========================== -->
+<section class="container my-5">
+    <div class="text-center mb-4">
+        <h3 class="fw-bold mb-4" style="color: #121212;">Explora por Categoría</h3>
+        <div class="d-flex flex-wrap justify-content-center gap-2">
+            <button class="btn btn-outline-dark rounded-pill px-4 filter-btn active" data-filter="all">
+                Todos
+            </button>
+            <button class="btn btn-outline-dark rounded-pill px-4 filter-btn" data-filter="entradas">
+                Entradas
+            </button>
+            <button class="btn btn-outline-dark rounded-pill px-4 filter-btn" data-filter="principales">
+                Platos Principales
+            </button>
+            <button class="btn btn-outline-dark rounded-pill px-4 filter-btn" data-filter="postres">
+                Postres
+            </button>
+            <button class="btn btn-outline-dark rounded-pill px-4 filter-btn" data-filter="bebidas">
+                Bebidas
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- =========================== -->
+<!-- GRID DE PLATILLOS -->
+<!-- =========================== -->
+<section class="container my-5 pb-5">
+    <div class="row g-4">
+        @if (Model != null && Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                <div class="col-lg-4 col-md-6 menu-item" data-category="principales">
+                    <div class="menu-card">
+                        <!-- Imagen del platillo -->
+                        <div class="menu-card-img-wrapper">
+                            <img src="@(item.Imagen != null && item.Imagen.Length > 0
+                                ? "data:image/jpeg;base64," + Convert.ToBase64String(item.Imagen)
+                                : Url.Content("~/Content/img/placeholder.png"))"
+                                 class="menu-card-img"
+                                 alt="@item.NombrePlato">
+                            <div class="menu-card-overlay">
+                                <span class="badge bg-danger">Popular</span>
+                            </div>
+                        </div>
+
+                        <!-- Contenido del platillo -->
+                        <div class="menu-card-body">
+                            <h5 class="menu-card-title">@item.NombrePlato</h5>
+                            <p class="menu-card-description">@item.Descripcion</p>
+
+                            <!-- Precio -->
+                            <div class="menu-card-price">
+                                <span class="price-amount">$@item.Precio.ToString("F2")</span>
+                            </div>
+
+                            <!-- Controles de cantidad -->
+                            <div class="quantity-controls">
+                                <button class="quantity-btn minus" onclick="decreaseQuantity(this)">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z" />
+                                    </svg>
+                                </button>
+                                <input type="number" class="quantity-input" value="1" min="1" max="99" readonly>
+                                <button class="quantity-btn plus" onclick="increaseQuantity(this)">
+                                    <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <!-- Botón agregar al carrito -->
+                            <button class="add-to-cart-btn" onclick="addToCart(this, '@item.NombrePlato', @item.Precio)">
+                                <svg width="18" height="18" fill="currentColor" viewBox="0 0 16 16" class="me-2">
+                                    <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+                                </svg>
+                                Agregar al Carrito
+                            </button>
+
+                            <!-- Botones de administrador -->
+                            @if (esAdministrador)
+                            {
+                                <div class="admin-actions mt-3 pt-3 border-top">
+                                    <div class="btn-group w-100">
+                                        <a href="@Url.Action("Edit", "menus", new { id = item.MenuID })" class="btn btn-outline-warning btn-sm">
+                                            <i class="bi bi-pencil"></i> Editar
+                                        </a>
+                                        <a href="@Url.Action("Delete", "menus", new { id = item.MenuID })" class="btn btn-outline-danger btn-sm">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="alert alert-warning text-center" role="alert">
+                    <strong>¡Ups!</strong> No hay platillos disponibles en este momento.
+                </div>
+            </div>
+        }
+    </div>
+</section>
+
+<!-- =========================== -->
+<!-- MODAL PARA AGREGAR PLATO (Solo para administradores) -->
+<!-- =========================== -->
+@if (esAdministrador)
+{
+    <div class="modal fade" id="modalAgregarPlato" tabindex="-1" aria-labelledby="modalAgregarPlatoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="modalAgregarPlatoLabel">
+                        <i class="bi bi-plus-circle"></i> Agregar Nuevo Plato
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                @using (Html.BeginForm("Create", "menus", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="modal-body">
+                        <div class="row g-3">
+                            <!-- Nombre del Plato -->
+                            <div class="col-md-6">
+                                <label for="NombrePlato" class="form-label">Nombre del Plato *</label>
+                                <input type="text" class="form-control" id="NombrePlato" name="NombrePlato" required>
+                            </div>
+
+                            <!-- Precio -->
+                            <div class="col-md-6">
+                                <label for="Precio" class="form-label">Precio *</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="Precio" name="Precio" step="0.01" min="0" required>
+                                </div>
+                            </div>
+
+                            <!-- Descripción -->
+                            <div class="col-12">
+                                <label for="Descripcion" class="form-label">Descripción</label>
+                                <textarea class="form-control" id="Descripcion" name="Descripcion" rows="3"></textarea>
+                            </div>
+
+                            <!-- Restaurante -->
+                            <div class="col-md-6">
+                                <label for="RestauranteID" class="form-label">Restaurante</label>
+                                @Html.DropDownList("RestauranteID", null, "Seleccionar Restaurante", new { @class = "form-control" })
+                            </div>
+
+                            <!-- Estado -->
+                            <div class="col-md-6">
+                                <label for="Estado" class="form-label">Estado</label>
+                                <select class="form-control" id="Estado" name="Estado">
+                                    <option value="Disponible" selected>Disponible</option>
+                                    <option value="No Disponible">No Disponible</option>
+                                </select>
+                            </div>
+
+                            <!-- Imagen -->
+                            <div class="col-12">
+                                <label for="imagenArchivo" class="form-label">Imagen del Plato</label>
+                                <input type="file" class="form-control" id="imagenArchivo" name="imagenArchivo" accept="image/*">
+                                <div class="form-text">Formatos aceptados: JPG, PNG, GIF. Tamaño máximo: 5MB</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-success">
+                            <i class="bi bi-check-circle"></i> Guardar Plato
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+<!-- =========================== -->
+<!-- CARRITO FLOTANTE -->
+<!-- =========================== -->
+<div class="floating-cart" id="floatingCart" onclick="toggleCart()">
+    <div class="cart-icon">
+        <svg width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </svg>
+        <span class="cart-badge" id="cartBadge">0</span>
+    </div>
+    <div class="cart-total">$0.00</div>
+</div>
+
+<!-- =========================== -->
+<!-- ESTILOS ADICIONALES PARA ADMIN -->
+<!-- =========================== -->
+<style>
+    .admin-actions {
+        border-color: #dee2e6 !important;
+    }
+
+    .btn-group .btn {
+        flex: 1;
+    }
+
+    .modal-header {
+        border-radius: 0;
+    }
+
+    /* Estilos para el formulario en el modal */
+    .form-label {
+        font-weight: 600;
+        color: #495057;
+    }
+
+    .form-control:focus {
+        border-color: #198754;
+        box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+    }
+</style>
+
+<!-- =========================== -->
+<!-- JAVASCRIPT -->
+<!-- =========================== -->
+<!-- Al final del Index.cshtml de menus, ANTES del </script> -->
+<script src="~/Content/Scripts/carrito.js"></script>
+
+<script>
+    // Usar las funciones del carrito.js
+
+    // Aumentar cantidad
+    function increaseQuantity(btn) {
+        const input = btn.parentElement.querySelector('.quantity-input');
+        let value = parseInt(input.value);
+        if (value < 99) {
+            input.value = value + 1;
+        }
+    }
+
+    // Disminuir cantidad
+    function decreaseQuantity(btn) {
+        const input = btn.parentElement.querySelector('.quantity-input');
+        let value = parseInt(input.value);
+        if (value > 1) {
+            input.value = value - 1;
+        }
+    }
+
+    // Agregar al carrito - usa la función del carrito.js
+    function addToCartFromMenu(btn, name, price) {
+        addToCart(btn, name, price);
+    }
+
+    // Toggle carrito
+    function toggleCart() {
+        if (getCartItems().length > 0) {
+            window.location.href = '@Url.Action("Cart", "Home")';
+        } else {
+            showNotification('Tu carrito está vacío', 'warning');
+        }
+    }
+
+    // Filtros de categoría
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            const filter = this.dataset.filter;
+            document.querySelectorAll('.menu-item').forEach(item => {
+                if (filter === 'all' || item.dataset.category === filter) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    });
+
+    // Preview de imagen antes de subir (para administradores)
+    document.getElementById('imagenArchivo')?.addEventListener('change', function (e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                console.log('Imagen seleccionada:', file.name);
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Validación del formulario (para administradores)
+    document.querySelector('form')?.addEventListener('submit', function (e) {
+        const precio = document.getElementById('Precio');
+        if (precio && parseFloat(precio.value) <= 0) {
+            e.preventDefault();
+            alert('El precio debe ser mayor a 0');
+            precio.focus();
+        }
+    });
+</script>

@@ -1,0 +1,101 @@
+﻿/* =========================== */
+/* ESTILOS PARA CHECKOUT */
+/* =========================== */
+
+.checkout-hero {
+    background: linear-gradient(135deg, #ff6b35 0%, #dc3545 100%);
+    padding: 3rem 0;
+    text-align: center;
+    color: white;
+    margin-bottom: 2rem;
+}
+
+.checkout-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.checkout-subtitle {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.checkout-item {
+    transition: background 0.3s ease;
+}
+
+    .checkout-item:hover {
+        background-color: #f8f9fa;
+        border-radius: 8px;
+        padding: 0.5rem;
+    }
+
+.order-totals {
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 12px;
+}
+
+.card-header.bg-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #ff6b35 100%) !important;
+    color: white;
+}
+
+.card-header.bg-danger {
+    background: linear-gradient(135deg, #dc3545 0%, #ff6b35 100%) !important;
+}
+
+.form-select,
+.form-control {
+    border: 2px solid #e9ecef;
+    border-radius: 12px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+    .form-select:focus,
+    .form-control:focus {
+        border-color: #ff6b35;
+        box-shadow: 0 0 0 0.2rem rgba(255, 107, 53, 0.25);
+    }
+
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+    }
+
+.btn-outline-secondary {
+    border: 2px solid #6c757d;
+    border-radius: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+    .btn-outline-secondary:hover {
+        background: #6c757d;
+        transform: translateY(-2px);
+    }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .checkout-title {
+        font-size: 2rem;
+    }
+
+    .checkout-subtitle {
+        font-size: 1rem;
+    }
+
+    .order-totals {
+        padding: 1rem;
+    }
+}

@@ -1,0 +1,64 @@
+﻿@model PedidosManejo.Models.historialpedido
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>historialpedido</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoAnterior)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoAnterior)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoNuevo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoNuevo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCambio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCambio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pedido.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pedido.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.usuario.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.usuario.Nombre)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

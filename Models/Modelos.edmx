@@ -1,0 +1,1076 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SQLmanejopedidosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="asignacionpedido">
+          <Key>
+            <PropertyRef Name="AsignacionID" />
+          </Key>
+          <Property Name="AsignacionID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PedidoID" Type="int" />
+          <Property Name="RepartidorID" Type="int" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="9" />
+        </EntityType>
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="20" />
+          <Property Name="Direccion" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Contactos">
+          <Key>
+            <PropertyRef Name="ContactoID" />
+          </Key>
+          <Property Name="ContactoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="20" />
+          <Property Name="Asunto" Type="nvarchar" MaxLength="100" />
+          <Property Name="Mensaje" Type="nvarchar" MaxLength="1000" Nullable="false" />
+          <Property Name="FechaEnvio" Type="datetime" Nullable="false" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="20" />
+          <Property Name="UsuarioID" Type="int" />
+        </EntityType>
+        <EntityType Name="detallepedido">
+          <Key>
+            <PropertyRef Name="DetallePedidoID" />
+          </Key>
+          <Property Name="DetallePedidoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PedidoID" Type="int" />
+          <Property Name="MenuID" Type="int" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Subtotal" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="factura">
+          <Key>
+            <PropertyRef Name="FacturaID" />
+          </Key>
+          <Property Name="FacturaID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PedidoID" Type="int" />
+          <Property Name="UsuarioID" Type="int" />
+          <Property Name="Total" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Fecha" Type="datetime" />
+          <Property Name="MetodoPago" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="historialpedido">
+          <Key>
+            <PropertyRef Name="HistorialID" />
+          </Key>
+          <Property Name="HistorialID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PedidoID" Type="int" />
+          <Property Name="EstadoAnterior" Type="nvarchar" MaxLength="14" />
+          <Property Name="EstadoNuevo" Type="nvarchar" MaxLength="14" />
+          <Property Name="FechaCambio" Type="datetime" />
+          <Property Name="UsuarioModificadorID" Type="int" />
+        </EntityType>
+        <EntityType Name="menu">
+          <Key>
+            <PropertyRef Name="MenuID" />
+          </Key>
+          <Property Name="MenuID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RestauranteID" Type="int" />
+          <Property Name="NombrePlato" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="Precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="13" />
+          <Property Name="Imagen" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="pedido">
+          <Key>
+            <PropertyRef Name="PedidoID" />
+          </Key>
+          <Property Name="PedidoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" />
+          <Property Name="RestauranteID" Type="int" />
+          <Property Name="FechaHora" Type="datetime" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="14" />
+          <Property Name="Total" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="permisos">
+          <Key>
+            <PropertyRef Name="PermisoID" />
+          </Key>
+          <Property Name="PermisoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombrePermiso" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="repartidor">
+          <Key>
+            <PropertyRef Name="RepartidorID" />
+          </Key>
+          <Property Name="RepartidorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UsuarioID" Type="int" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="10" />
+          <Property Name="Vehiculo" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="restaurante">
+          <Key>
+            <PropertyRef Name="RestauranteID" />
+          </Key>
+          <Property Name="RestauranteID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="Categoria" Type="nvarchar" MaxLength="50" />
+          <Property Name="Imagen" Type="nvarchar" MaxLength="255" />
+          <Property Name="PropietarioID" Type="int" />
+        </EntityType>
+        <EntityType Name="rol">
+          <Key>
+            <PropertyRef Name="RolID" />
+          </Key>
+          <Property Name="RolID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreRol" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" />
+          <Property Name="PermisoID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CorreoElectronico" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Contraseña" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="RolID" Type="int" />
+          <Property Name="FechaRegistro" Type="datetime" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="8" />
+        </EntityType>
+        <Association Name="asignacionpedido$asignacionpedido_ibfk_1">
+          <End Role="pedido" Type="Self.pedido" Multiplicity="0..1" />
+          <End Role="asignacionpedido" Type="Self.asignacionpedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pedido">
+              <PropertyRef Name="PedidoID" />
+            </Principal>
+            <Dependent Role="asignacionpedido">
+              <PropertyRef Name="PedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="asignacionpedido$asignacionpedido_ibfk_2">
+          <End Role="repartidor" Type="Self.repartidor" Multiplicity="0..1" />
+          <End Role="asignacionpedido" Type="Self.asignacionpedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="repartidor">
+              <PropertyRef Name="RepartidorID" />
+            </Principal>
+            <Dependent Role="asignacionpedido">
+              <PropertyRef Name="RepartidorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="cliente$cliente_ibfk_1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="cliente" Type="Self.cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="cliente">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="detallepedido$detallepedido_ibfk_1">
+          <End Role="pedido" Type="Self.pedido" Multiplicity="0..1" />
+          <End Role="detallepedido" Type="Self.detallepedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pedido">
+              <PropertyRef Name="PedidoID" />
+            </Principal>
+            <Dependent Role="detallepedido">
+              <PropertyRef Name="PedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="detallepedido$detallepedido_ibfk_2">
+          <End Role="menu" Type="Self.menu" Multiplicity="0..1" />
+          <End Role="detallepedido" Type="Self.detallepedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="menu">
+              <PropertyRef Name="MenuID" />
+            </Principal>
+            <Dependent Role="detallepedido">
+              <PropertyRef Name="MenuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="factura$factura_ibfk_1">
+          <End Role="pedido" Type="Self.pedido" Multiplicity="0..1" />
+          <End Role="factura" Type="Self.factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pedido">
+              <PropertyRef Name="PedidoID" />
+            </Principal>
+            <Dependent Role="factura">
+              <PropertyRef Name="PedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="factura$factura_ibfk_2">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="factura" Type="Self.factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="factura">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contactos_Usuario">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="Contactos" Type="Self.Contactos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="Contactos">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rol_Permisos">
+          <End Role="permisos" Type="Self.permisos" Multiplicity="1" />
+          <End Role="rol" Type="Self.rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="permisos">
+              <PropertyRef Name="PermisoID" />
+            </Principal>
+            <Dependent Role="rol">
+              <PropertyRef Name="PermisoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="historialpedido$historialpedido_ibfk_1">
+          <End Role="pedido" Type="Self.pedido" Multiplicity="0..1" />
+          <End Role="historialpedido" Type="Self.historialpedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pedido">
+              <PropertyRef Name="PedidoID" />
+            </Principal>
+            <Dependent Role="historialpedido">
+              <PropertyRef Name="PedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="historialpedido$historialpedido_ibfk_2">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="historialpedido" Type="Self.historialpedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="historialpedido">
+              <PropertyRef Name="UsuarioModificadorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="menu$menu_ibfk_1">
+          <End Role="restaurante" Type="Self.restaurante" Multiplicity="0..1" />
+          <End Role="menu" Type="Self.menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurante">
+              <PropertyRef Name="RestauranteID" />
+            </Principal>
+            <Dependent Role="menu">
+              <PropertyRef Name="RestauranteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pedido$pedido_ibfk_1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pedido$pedido_ibfk_2">
+          <End Role="restaurante" Type="Self.restaurante" Multiplicity="0..1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurante">
+              <PropertyRef Name="RestauranteID" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="RestauranteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="repartidor$repartidor_ibfk_1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="repartidor" Type="Self.repartidor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="repartidor">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="restaurante$restaurante_ibfk_1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="restaurante" Type="Self.restaurante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="restaurante">
+              <PropertyRef Name="PropietarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usuario$usuario_ibfk_1">
+          <End Role="rol" Type="Self.rol" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rol">
+              <PropertyRef Name="RolID" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="RolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SQLmanejopedidosModelStoreContainer">
+          <EntitySet Name="asignacionpedido" EntityType="Self.asignacionpedido" Schema="manejopedidos" store:Type="Tables" />
+          <EntitySet Name="cliente" EntityType="Self.cliente" Schema="manejopedidos" store:Type="Tables" />
+          <EntitySet Name="Contactos" EntityType="Self.Contactos" Schema="manejopedidos" store:Type="Tables" />
+          <EntitySet Name="detallepedido" EntityType="Self.detallepedido" Schema="manejopedidos" store:Type="Tables" />
+          <EntitySet Name="factura" EntityType="Self.factura" Schema="manejopedidos" store:Type="Tables" />
+          <EntitySet Name="historialpedido" EntityType="Self.historialpedido" Schema="manejopedidos" store:Type="Tables" />
+          <EntitySet Name="menu" EntityType="Self.menu" Schema="manejopedidos" store:Type="Tables" />
+          <EntitySet Name="pedido" EntityType="Self.pedido" Schema="manejopedidos" store:Type="Tables" />
+          <EntitySet Name="permisos" EntityType="Self.permisos" Schema="manejopedidos" store:Type="Tables" />
+          <EntitySet Name="repartidor" EntityType="Self.repartidor" Schema="manejopedidos" store:Type="Tables" />
+          <EntitySet Name="restaurante" EntityType="Self.restaurante" Schema="manejopedidos" store:Type="Tables" />
+          <EntitySet Name="rol" EntityType="Self.rol" Schema="manejopedidos" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="manejopedidos" store:Type="Tables" />
+          <AssociationSet Name="asignacionpedido$asignacionpedido_ibfk_1" Association="Self.asignacionpedido$asignacionpedido_ibfk_1">
+            <End Role="pedido" EntitySet="pedido" />
+            <End Role="asignacionpedido" EntitySet="asignacionpedido" />
+          </AssociationSet>
+          <AssociationSet Name="asignacionpedido$asignacionpedido_ibfk_2" Association="Self.asignacionpedido$asignacionpedido_ibfk_2">
+            <End Role="repartidor" EntitySet="repartidor" />
+            <End Role="asignacionpedido" EntitySet="asignacionpedido" />
+          </AssociationSet>
+          <AssociationSet Name="cliente$cliente_ibfk_1" Association="Self.cliente$cliente_ibfk_1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="cliente" EntitySet="cliente" />
+          </AssociationSet>
+          <AssociationSet Name="detallepedido$detallepedido_ibfk_1" Association="Self.detallepedido$detallepedido_ibfk_1">
+            <End Role="pedido" EntitySet="pedido" />
+            <End Role="detallepedido" EntitySet="detallepedido" />
+          </AssociationSet>
+          <AssociationSet Name="detallepedido$detallepedido_ibfk_2" Association="Self.detallepedido$detallepedido_ibfk_2">
+            <End Role="menu" EntitySet="menu" />
+            <End Role="detallepedido" EntitySet="detallepedido" />
+          </AssociationSet>
+          <AssociationSet Name="factura$factura_ibfk_1" Association="Self.factura$factura_ibfk_1">
+            <End Role="pedido" EntitySet="pedido" />
+            <End Role="factura" EntitySet="factura" />
+          </AssociationSet>
+          <AssociationSet Name="factura$factura_ibfk_2" Association="Self.factura$factura_ibfk_2">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="factura" EntitySet="factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contactos_Usuario" Association="Self.FK_Contactos_Usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="Contactos" EntitySet="Contactos" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Permisos" Association="Self.FK_Rol_Permisos">
+            <End Role="permisos" EntitySet="permisos" />
+            <End Role="rol" EntitySet="rol" />
+          </AssociationSet>
+          <AssociationSet Name="historialpedido$historialpedido_ibfk_1" Association="Self.historialpedido$historialpedido_ibfk_1">
+            <End Role="pedido" EntitySet="pedido" />
+            <End Role="historialpedido" EntitySet="historialpedido" />
+          </AssociationSet>
+          <AssociationSet Name="historialpedido$historialpedido_ibfk_2" Association="Self.historialpedido$historialpedido_ibfk_2">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="historialpedido" EntitySet="historialpedido" />
+          </AssociationSet>
+          <AssociationSet Name="menu$menu_ibfk_1" Association="Self.menu$menu_ibfk_1">
+            <End Role="restaurante" EntitySet="restaurante" />
+            <End Role="menu" EntitySet="menu" />
+          </AssociationSet>
+          <AssociationSet Name="pedido$pedido_ibfk_1" Association="Self.pedido$pedido_ibfk_1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="pedido$pedido_ibfk_2" Association="Self.pedido$pedido_ibfk_2">
+            <End Role="restaurante" EntitySet="restaurante" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="repartidor$repartidor_ibfk_1" Association="Self.repartidor$repartidor_ibfk_1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="repartidor" EntitySet="repartidor" />
+          </AssociationSet>
+          <AssociationSet Name="restaurante$restaurante_ibfk_1" Association="Self.restaurante$restaurante_ibfk_1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="restaurante" EntitySet="restaurante" />
+          </AssociationSet>
+          <AssociationSet Name="usuario$usuario_ibfk_1" Association="Self.usuario$usuario_ibfk_1">
+            <End Role="rol" EntitySet="rol" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SQLmanejopedidosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="asignacionpedido">
+          <Key>
+            <PropertyRef Name="AsignacionID" />
+          </Key>
+          <Property Name="AsignacionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PedidoID" Type="Int32" />
+          <Property Name="RepartidorID" Type="Int32" />
+          <Property Name="Estado" Type="String" MaxLength="9" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="pedido" Relationship="Self.asignacionpedido_asignacionpedido_ibfk_1" FromRole="asignacionpedido" ToRole="pedido" />
+          <NavigationProperty Name="repartidor" Relationship="Self.asignacionpedido_asignacionpedido_ibfk_2" FromRole="asignacionpedido" ToRole="repartidor" />
+        </EntityType>
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="ClienteID" />
+          </Key>
+          <Property Name="ClienteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioID" Type="Int32" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="usuario" Relationship="Self.cliente_cliente_ibfk_1" FromRole="cliente" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="detallepedido">
+          <Key>
+            <PropertyRef Name="DetallePedidoID" />
+          </Key>
+          <Property Name="DetallePedidoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PedidoID" Type="Int32" />
+          <Property Name="MenuID" Type="Int32" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="PrecioUnitario" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Subtotal" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="pedido" Relationship="Self.detallepedido_detallepedido_ibfk_1" FromRole="detallepedido" ToRole="pedido" />
+          <NavigationProperty Name="menu" Relationship="Self.detallepedido_detallepedido_ibfk_2" FromRole="detallepedido" ToRole="menu" />
+        </EntityType>
+        <EntityType Name="factura">
+          <Key>
+            <PropertyRef Name="FacturaID" />
+          </Key>
+          <Property Name="FacturaID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PedidoID" Type="Int32" />
+          <Property Name="UsuarioID" Type="Int32" />
+          <Property Name="Total" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Fecha" Type="DateTime" Precision="3" />
+          <Property Name="MetodoPago" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="pedido" Relationship="Self.factura_factura_ibfk_1" FromRole="factura" ToRole="pedido" />
+          <NavigationProperty Name="usuario" Relationship="Self.factura_factura_ibfk_2" FromRole="factura" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="historialpedido">
+          <Key>
+            <PropertyRef Name="HistorialID" />
+          </Key>
+          <Property Name="HistorialID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PedidoID" Type="Int32" />
+          <Property Name="EstadoAnterior" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="EstadoNuevo" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="FechaCambio" Type="DateTime" Precision="3" />
+          <Property Name="UsuarioModificadorID" Type="Int32" />
+          <NavigationProperty Name="pedido" Relationship="Self.historialpedido_historialpedido_ibfk_1" FromRole="historialpedido" ToRole="pedido" />
+          <NavigationProperty Name="usuario" Relationship="Self.historialpedido_historialpedido_ibfk_2" FromRole="historialpedido" ToRole="usuario" />
+        </EntityType>
+		  <EntityType Name="menu">
+			  <Key>
+				  <PropertyRef Name="MenuID" />
+			  </Key>
+			  <Property Name="MenuID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+			  <Property Name="RestauranteID" Type="Int32" />
+			  <Property Name="NombrePlato" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+			  <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+			  <Property Name="Precio" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+			  <Property Name="Estado" Type="String" MaxLength="13" FixedLength="false" Unicode="true" />
+			  <Property Name="Imagen" Type="Binary" MaxLength="Max" FixedLength="false" />
+			  <NavigationProperty Name="detallepedido" Relationship="Self.detallepedido_detallepedido_ibfk_2" FromRole="menu" ToRole="detallepedido" />
+			  <NavigationProperty Name="restaurante" Relationship="Self.menu_menu_ibfk_1" FromRole="menu" ToRole="restaurante" />
+		  </EntityType>
+        <EntityType Name="pedido">
+          <Key>
+            <PropertyRef Name="PedidoID" />
+          </Key>
+          <Property Name="PedidoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioID" Type="Int32" />
+          <Property Name="RestauranteID" Type="Int32" />
+          <Property Name="FechaHora" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="String" MaxLength="14" FixedLength="false" Unicode="true" />
+          <Property Name="Total" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="asignacionpedido" Relationship="Self.asignacionpedido_asignacionpedido_ibfk_1" FromRole="pedido" ToRole="asignacionpedido" />
+          <NavigationProperty Name="detallepedido" Relationship="Self.detallepedido_detallepedido_ibfk_1" FromRole="pedido" ToRole="detallepedido" />
+          <NavigationProperty Name="factura" Relationship="Self.factura_factura_ibfk_1" FromRole="pedido" ToRole="factura" />
+          <NavigationProperty Name="historialpedido" Relationship="Self.historialpedido_historialpedido_ibfk_1" FromRole="pedido" ToRole="historialpedido" />
+          <NavigationProperty Name="usuario" Relationship="Self.pedido_pedido_ibfk_1" FromRole="pedido" ToRole="usuario" />
+          <NavigationProperty Name="restaurante" Relationship="Self.pedido_pedido_ibfk_2" FromRole="pedido" ToRole="restaurante" />
+        </EntityType>
+        <EntityType Name="permisos">
+          <Key>
+            <PropertyRef Name="PermisoID" />
+          </Key>
+          <Property Name="PermisoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombrePermiso" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="rol" Relationship="SQLmanejopedidosModel.FK_Rol_Permisos" FromRole="permisos" ToRole="rol" />
+        </EntityType>
+        <EntityType Name="repartidor">
+          <Key>
+            <PropertyRef Name="RepartidorID" />
+          </Key>
+          <Property Name="RepartidorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UsuarioID" Type="Int32" />
+          <Property Name="Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Vehiculo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="asignacionpedido" Relationship="Self.asignacionpedido_asignacionpedido_ibfk_2" FromRole="repartidor" ToRole="asignacionpedido" />
+          <NavigationProperty Name="usuario" Relationship="Self.repartidor_repartidor_ibfk_1" FromRole="repartidor" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="restaurante">
+          <Key>
+            <PropertyRef Name="RestauranteID" />
+          </Key>
+          <Property Name="RestauranteID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Categoria" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Imagen" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PropietarioID" Type="Int32" />
+          <NavigationProperty Name="menu" Relationship="Self.menu_menu_ibfk_1" FromRole="restaurante" ToRole="menu" />
+          <NavigationProperty Name="pedido" Relationship="Self.pedido_pedido_ibfk_2" FromRole="restaurante" ToRole="pedido" />
+          <NavigationProperty Name="usuario" Relationship="Self.restaurante_restaurante_ibfk_1" FromRole="restaurante" ToRole="usuario" />
+        </EntityType>
+        <EntityType Name="rol">
+          <Key>
+            <PropertyRef Name="RolID" />
+          </Key>
+          <Property Name="RolID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreRol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="usuario" Relationship="Self.usuario_usuario_ibfk_1" FromRole="rol" ToRole="usuario" />
+          <Property Name="PermisoID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="permisos" Relationship="SQLmanejopedidosModel.FK_Rol_Permisos" FromRole="rol" ToRole="permisos" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="UsuarioID" />
+          </Key>
+          <Property Name="UsuarioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CorreoElectronico" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Contraseña" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RolID" Type="Int32" />
+          <Property Name="FechaRegistro" Type="DateTime" Precision="3" />
+          <Property Name="Estado" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cliente" Relationship="Self.cliente_cliente_ibfk_1" FromRole="usuario" ToRole="cliente" />
+          <NavigationProperty Name="factura" Relationship="Self.factura_factura_ibfk_2" FromRole="usuario" ToRole="factura" />
+          <NavigationProperty Name="historialpedido" Relationship="Self.historialpedido_historialpedido_ibfk_2" FromRole="usuario" ToRole="historialpedido" />
+          <NavigationProperty Name="pedido" Relationship="Self.pedido_pedido_ibfk_1" FromRole="usuario" ToRole="pedido" />
+          <NavigationProperty Name="repartidor" Relationship="Self.repartidor_repartidor_ibfk_1" FromRole="usuario" ToRole="repartidor" />
+          <NavigationProperty Name="restaurante" Relationship="Self.restaurante_restaurante_ibfk_1" FromRole="usuario" ToRole="restaurante" />
+          <NavigationProperty Name="rol" Relationship="Self.usuario_usuario_ibfk_1" FromRole="usuario" ToRole="rol" />
+          <NavigationProperty Name="Contactos" Relationship="SQLmanejopedidosModel.FK_Contactos_Usuario" FromRole="usuario" ToRole="Contactos" />
+        </EntityType>
+        <Association Name="asignacionpedido_asignacionpedido_ibfk_1">
+          <End Role="pedido" Type="Self.pedido" Multiplicity="0..1" />
+          <End Role="asignacionpedido" Type="Self.asignacionpedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pedido">
+              <PropertyRef Name="PedidoID" />
+            </Principal>
+            <Dependent Role="asignacionpedido">
+              <PropertyRef Name="PedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="asignacionpedido_asignacionpedido_ibfk_2">
+          <End Role="repartidor" Type="Self.repartidor" Multiplicity="0..1" />
+          <End Role="asignacionpedido" Type="Self.asignacionpedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="repartidor">
+              <PropertyRef Name="RepartidorID" />
+            </Principal>
+            <Dependent Role="asignacionpedido">
+              <PropertyRef Name="RepartidorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="cliente_cliente_ibfk_1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="cliente" Type="Self.cliente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="cliente">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="detallepedido_detallepedido_ibfk_1">
+          <End Role="pedido" Type="Self.pedido" Multiplicity="0..1" />
+          <End Role="detallepedido" Type="Self.detallepedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pedido">
+              <PropertyRef Name="PedidoID" />
+            </Principal>
+            <Dependent Role="detallepedido">
+              <PropertyRef Name="PedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="detallepedido_detallepedido_ibfk_2">
+          <End Role="menu" Type="Self.menu" Multiplicity="0..1" />
+          <End Role="detallepedido" Type="Self.detallepedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="menu">
+              <PropertyRef Name="MenuID" />
+            </Principal>
+            <Dependent Role="detallepedido">
+              <PropertyRef Name="MenuID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="factura_factura_ibfk_1">
+          <End Role="pedido" Type="Self.pedido" Multiplicity="0..1" />
+          <End Role="factura" Type="Self.factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pedido">
+              <PropertyRef Name="PedidoID" />
+            </Principal>
+            <Dependent Role="factura">
+              <PropertyRef Name="PedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="factura_factura_ibfk_2">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="factura" Type="Self.factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="factura">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="historialpedido_historialpedido_ibfk_1">
+          <End Role="pedido" Type="Self.pedido" Multiplicity="0..1" />
+          <End Role="historialpedido" Type="Self.historialpedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="pedido">
+              <PropertyRef Name="PedidoID" />
+            </Principal>
+            <Dependent Role="historialpedido">
+              <PropertyRef Name="PedidoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="historialpedido_historialpedido_ibfk_2">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="historialpedido" Type="Self.historialpedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="historialpedido">
+              <PropertyRef Name="UsuarioModificadorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="menu_menu_ibfk_1">
+          <End Role="restaurante" Type="Self.restaurante" Multiplicity="0..1" />
+          <End Role="menu" Type="Self.menu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurante">
+              <PropertyRef Name="RestauranteID" />
+            </Principal>
+            <Dependent Role="menu">
+              <PropertyRef Name="RestauranteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pedido_pedido_ibfk_1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="pedido_pedido_ibfk_2">
+          <End Role="restaurante" Type="Self.restaurante" Multiplicity="0..1" />
+          <End Role="pedido" Type="Self.pedido" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="restaurante">
+              <PropertyRef Name="RestauranteID" />
+            </Principal>
+            <Dependent Role="pedido">
+              <PropertyRef Name="RestauranteID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="repartidor_repartidor_ibfk_1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="repartidor" Type="Self.repartidor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="repartidor">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="restaurante_restaurante_ibfk_1">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="restaurante" Type="Self.restaurante" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="restaurante">
+              <PropertyRef Name="PropietarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="usuario_usuario_ibfk_1">
+          <End Role="rol" Type="Self.rol" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="rol">
+              <PropertyRef Name="RolID" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="RolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SQLmanejopedidosEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="asignacionpedido" EntityType="Self.asignacionpedido" />
+          <EntitySet Name="cliente" EntityType="Self.cliente" />
+          <EntitySet Name="detallepedido" EntityType="Self.detallepedido" />
+          <EntitySet Name="factura" EntityType="Self.factura" />
+          <EntitySet Name="historialpedido" EntityType="Self.historialpedido" />
+          <EntitySet Name="menu" EntityType="Self.menu" />
+          <EntitySet Name="pedido" EntityType="Self.pedido" />
+          <EntitySet Name="permisos" EntityType="Self.permisos" />
+          <EntitySet Name="repartidor" EntityType="Self.repartidor" />
+          <EntitySet Name="restaurante" EntityType="Self.restaurante" />
+          <EntitySet Name="rol" EntityType="Self.rol" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" />
+          <AssociationSet Name="asignacionpedido_asignacionpedido_ibfk_1" Association="Self.asignacionpedido_asignacionpedido_ibfk_1">
+            <End Role="pedido" EntitySet="pedido" />
+            <End Role="asignacionpedido" EntitySet="asignacionpedido" />
+          </AssociationSet>
+          <AssociationSet Name="asignacionpedido_asignacionpedido_ibfk_2" Association="Self.asignacionpedido_asignacionpedido_ibfk_2">
+            <End Role="repartidor" EntitySet="repartidor" />
+            <End Role="asignacionpedido" EntitySet="asignacionpedido" />
+          </AssociationSet>
+          <AssociationSet Name="cliente_cliente_ibfk_1" Association="Self.cliente_cliente_ibfk_1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="cliente" EntitySet="cliente" />
+          </AssociationSet>
+          <AssociationSet Name="detallepedido_detallepedido_ibfk_1" Association="Self.detallepedido_detallepedido_ibfk_1">
+            <End Role="pedido" EntitySet="pedido" />
+            <End Role="detallepedido" EntitySet="detallepedido" />
+          </AssociationSet>
+          <AssociationSet Name="detallepedido_detallepedido_ibfk_2" Association="Self.detallepedido_detallepedido_ibfk_2">
+            <End Role="menu" EntitySet="menu" />
+            <End Role="detallepedido" EntitySet="detallepedido" />
+          </AssociationSet>
+          <AssociationSet Name="factura_factura_ibfk_1" Association="Self.factura_factura_ibfk_1">
+            <End Role="pedido" EntitySet="pedido" />
+            <End Role="factura" EntitySet="factura" />
+          </AssociationSet>
+          <AssociationSet Name="factura_factura_ibfk_2" Association="Self.factura_factura_ibfk_2">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="factura" EntitySet="factura" />
+          </AssociationSet>
+          <AssociationSet Name="historialpedido_historialpedido_ibfk_1" Association="Self.historialpedido_historialpedido_ibfk_1">
+            <End Role="pedido" EntitySet="pedido" />
+            <End Role="historialpedido" EntitySet="historialpedido" />
+          </AssociationSet>
+          <AssociationSet Name="historialpedido_historialpedido_ibfk_2" Association="Self.historialpedido_historialpedido_ibfk_2">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="historialpedido" EntitySet="historialpedido" />
+          </AssociationSet>
+          <AssociationSet Name="menu_menu_ibfk_1" Association="Self.menu_menu_ibfk_1">
+            <End Role="restaurante" EntitySet="restaurante" />
+            <End Role="menu" EntitySet="menu" />
+          </AssociationSet>
+          <AssociationSet Name="pedido_pedido_ibfk_1" Association="Self.pedido_pedido_ibfk_1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="pedido_pedido_ibfk_2" Association="Self.pedido_pedido_ibfk_2">
+            <End Role="restaurante" EntitySet="restaurante" />
+            <End Role="pedido" EntitySet="pedido" />
+          </AssociationSet>
+          <AssociationSet Name="repartidor_repartidor_ibfk_1" Association="Self.repartidor_repartidor_ibfk_1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="repartidor" EntitySet="repartidor" />
+          </AssociationSet>
+          <AssociationSet Name="restaurante_restaurante_ibfk_1" Association="Self.restaurante_restaurante_ibfk_1">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="restaurante" EntitySet="restaurante" />
+          </AssociationSet>
+          <AssociationSet Name="usuario_usuario_ibfk_1" Association="Self.usuario_usuario_ibfk_1">
+            <End Role="rol" EntitySet="rol" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rol_Permisos" Association="SQLmanejopedidosModel.FK_Rol_Permisos">
+            <End Role="permisos" EntitySet="permisos" />
+            <End Role="rol" EntitySet="rol" />
+          </AssociationSet>
+          <EntitySet Name="Contactos" EntityType="SQLmanejopedidosModel.Contactos" />
+          <AssociationSet Name="FK_Contactos_Usuario" Association="SQLmanejopedidosModel.FK_Contactos_Usuario">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="Contactos" EntitySet="Contactos" />
+          </AssociationSet>
+          </EntityContainer>
+        <Association Name="FK_Rol_Permisos">
+          <End Type="SQLmanejopedidosModel.permisos" Role="permisos" Multiplicity="1" />
+          <End Type="SQLmanejopedidosModel.rol" Role="rol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="permisos">
+              <PropertyRef Name="PermisoID" />
+            </Principal>
+            <Dependent Role="rol">
+              <PropertyRef Name="PermisoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Contactos">
+          <Key>
+            <PropertyRef Name="ContactoID" />
+          </Key>
+          <Property Name="ContactoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Asunto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Mensaje" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="FechaEnvio" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Estado" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="UsuarioID" Type="Int32" />
+          <NavigationProperty Name="usuario" Relationship="SQLmanejopedidosModel.FK_Contactos_Usuario" FromRole="Contactos" ToRole="usuario" />
+        </EntityType>
+        <Association Name="FK_Contactos_Usuario">
+          <End Type="SQLmanejopedidosModel.usuario" Role="usuario" Multiplicity="0..1" />
+          <End Type="SQLmanejopedidosModel.Contactos" Role="Contactos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="UsuarioID" />
+            </Principal>
+            <Dependent Role="Contactos">
+              <PropertyRef Name="UsuarioID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SQLmanejopedidosModelStoreContainer" CdmEntityContainer="SQLmanejopedidosEntities1">
+          <EntitySetMapping Name="asignacionpedido">
+            <EntityTypeMapping TypeName="IsTypeOf(SQLmanejopedidosModel.asignacionpedido)">
+              <MappingFragment StoreEntitySet="asignacionpedido">
+                <ScalarProperty Name="AsignacionID" ColumnName="AsignacionID" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="RepartidorID" ColumnName="RepartidorID" />
+                <ScalarProperty Name="PedidoID" ColumnName="PedidoID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cliente">
+            <EntityTypeMapping TypeName="SQLmanejopedidosModel.cliente">
+              <MappingFragment StoreEntitySet="cliente">
+                <ScalarProperty Name="ClienteID" ColumnName="ClienteID" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="detallepedido">
+            <EntityTypeMapping TypeName="SQLmanejopedidosModel.detallepedido">
+              <MappingFragment StoreEntitySet="detallepedido">
+                <ScalarProperty Name="DetallePedidoID" ColumnName="DetallePedidoID" />
+                <ScalarProperty Name="PedidoID" ColumnName="PedidoID" />
+                <ScalarProperty Name="MenuID" ColumnName="MenuID" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="PrecioUnitario" ColumnName="PrecioUnitario" />
+                <ScalarProperty Name="Subtotal" ColumnName="Subtotal" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="factura">
+            <EntityTypeMapping TypeName="SQLmanejopedidosModel.factura">
+              <MappingFragment StoreEntitySet="factura">
+                <ScalarProperty Name="FacturaID" ColumnName="FacturaID" />
+                <ScalarProperty Name="PedidoID" ColumnName="PedidoID" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+                <ScalarProperty Name="MetodoPago" ColumnName="MetodoPago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="historialpedido">
+            <EntityTypeMapping TypeName="SQLmanejopedidosModel.historialpedido">
+              <MappingFragment StoreEntitySet="historialpedido">
+                <ScalarProperty Name="HistorialID" ColumnName="HistorialID" />
+                <ScalarProperty Name="PedidoID" ColumnName="PedidoID" />
+                <ScalarProperty Name="EstadoAnterior" ColumnName="EstadoAnterior" />
+                <ScalarProperty Name="EstadoNuevo" ColumnName="EstadoNuevo" />
+                <ScalarProperty Name="FechaCambio" ColumnName="FechaCambio" />
+                <ScalarProperty Name="UsuarioModificadorID" ColumnName="UsuarioModificadorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+			<EntitySetMapping Name="menu">
+				<EntityTypeMapping TypeName="SQLmanejopedidosModel.menu">
+					<MappingFragment StoreEntitySet="menu">
+						<ScalarProperty Name="MenuID" ColumnName="MenuID" />
+						<ScalarProperty Name="RestauranteID" ColumnName="RestauranteID" />
+						<ScalarProperty Name="NombrePlato" ColumnName="NombrePlato" />
+						<ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+						<ScalarProperty Name="Precio" ColumnName="Precio" />
+						<ScalarProperty Name="Estado" ColumnName="Estado" />
+						<ScalarProperty Name="Imagen" ColumnName="Imagen" />
+					</MappingFragment>
+				</EntityTypeMapping>
+			</EntitySetMapping>
+          <EntitySetMapping Name="pedido">
+            <EntityTypeMapping TypeName="SQLmanejopedidosModel.pedido">
+              <MappingFragment StoreEntitySet="pedido">
+                <ScalarProperty Name="PedidoID" ColumnName="PedidoID" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="RestauranteID" ColumnName="RestauranteID" />
+                <ScalarProperty Name="FechaHora" ColumnName="FechaHora" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="permisos">
+            <EntityTypeMapping TypeName="SQLmanejopedidosModel.permisos">
+              <MappingFragment StoreEntitySet="permisos">
+                <ScalarProperty Name="PermisoID" ColumnName="PermisoID" />
+                <ScalarProperty Name="NombrePermiso" ColumnName="NombrePermiso" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="repartidor">
+            <EntityTypeMapping TypeName="SQLmanejopedidosModel.repartidor">
+              <MappingFragment StoreEntitySet="repartidor">
+                <ScalarProperty Name="RepartidorID" ColumnName="RepartidorID" />
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Vehiculo" ColumnName="Vehiculo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="restaurante">
+            <EntityTypeMapping TypeName="SQLmanejopedidosModel.restaurante">
+              <MappingFragment StoreEntitySet="restaurante">
+                <ScalarProperty Name="RestauranteID" ColumnName="RestauranteID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Categoria" ColumnName="Categoria" />
+                <ScalarProperty Name="Imagen" ColumnName="Imagen" />
+                <ScalarProperty Name="PropietarioID" ColumnName="PropietarioID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="rol">
+            <EntityTypeMapping TypeName="SQLmanejopedidosModel.rol">
+              <MappingFragment StoreEntitySet="rol">
+                <ScalarProperty Name="PermisoID" ColumnName="PermisoID" />
+                <ScalarProperty Name="RolID" ColumnName="RolID" />
+                <ScalarProperty Name="NombreRol" ColumnName="NombreRol" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="SQLmanejopedidosModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="CorreoElectronico" ColumnName="CorreoElectronico" />
+                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+                <ScalarProperty Name="RolID" ColumnName="RolID" />
+                <ScalarProperty Name="FechaRegistro" ColumnName="FechaRegistro" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contactos">
+            <EntityTypeMapping TypeName="IsTypeOf(SQLmanejopedidosModel.Contactos)">
+              <MappingFragment StoreEntitySet="Contactos">
+                <ScalarProperty Name="UsuarioID" ColumnName="UsuarioID" />
+                <ScalarProperty Name="ContactoID" ColumnName="ContactoID" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="FechaEnvio" ColumnName="FechaEnvio" />
+                <ScalarProperty Name="Mensaje" ColumnName="Mensaje" />
+                <ScalarProperty Name="Asunto" ColumnName="Asunto" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,159 @@
+﻿@using System.Security.Claims
+
+@if (Request.IsAuthenticated)
+{
+    // Obtener el RolID del usuario actual
+    var rolClaim = ((ClaimsIdentity)User.Identity).FindFirst(ClaimTypes.Role);
+    int rolId = rolClaim != null ? int.Parse(rolClaim.Value) : 0;
+
+    // Verificar si tiene PermisoID = 1 (Administrador/Gerente)
+    bool tienePermisoAdmin = false;
+    using (var db = new PedidosManejo.Models.SQLmanejopedidosEntities1())
+    {
+        var rol = db.rol.FirstOrDefault(r => r.RolID == rolId);
+        tienePermisoAdmin = rol != null && rol.PermisoID == 1;
+    }
+
+    <ul class="navbar-nav ms-auto">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown"
+               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <div class="user-avatar me-2">
+                    @((User.Identity.Name ?? "U").Substring(0, 1).ToUpper())
+                </div>
+                <span>@User.Identity.Name</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <i class="bi bi-person"></i> Mi Perfil
+                    </a>
+                </li>
+                <li>
+                    <a class="dropdown-item" href="#">
+                        <i class="bi bi-bag"></i> Mis Pedidos
+                    </a>
+                </li>
+
+                @* Mostrar solo si tiene PermisoID = 1 *@
+                @if (tienePermisoAdmin)
+                {
+                    <li><hr class="dropdown-divider"></li>
+                    <li class="dropdown-header">Administración</li>
+                    <li>
+                        @Html.ActionLink("Registrar Repartidor", "RegisterRepartidor", "Account", null, new { @class = "dropdown-item admin-item" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Gestionar Usuarios", "Index", "usuarios", null, new { @class = "dropdown-item admin-item" })
+                    </li>
+                    <li>
+                        @Html.ActionLink("Gestionar Repartidores", "Index", "repartidors", null, new { @class = "dropdown-item admin-item" })
+                    </li>
+                }
+
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                    <form id="logoutForm" method="post" action="@Url.Action("LogOff", "Account")">
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="dropdown-item text-danger">
+                            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </li>
+    </ul>
+}
+else
+{
+    <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+            @Html.ActionLink("Iniciar Sesión", "Login", "Account", null, new { @class = "nav-link" })
+        </li>
+        <li class="nav-item">
+            @Html.ActionLink("Registrarse", "Register", "Account", null, new { @class = "nav-link btn-register-nav" })
+        </li>
+    </ul>
+}
+
+<style>
+    .user-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #ffc107 0%, #ff6b35 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+        font-size: 0.9rem;
+    }
+
+    .dropdown-menu {
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        margin-top: 0.5rem;
+        min-width: 250px;
+    }
+
+    .dropdown-header {
+        font-weight: 700;
+        color: #ff6b35;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        padding: 0.5rem 1.5rem;
+    }
+
+    .dropdown-item {
+        padding: 0.75rem 1.5rem;
+        transition: all 0.3s ease;
+    }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #ff6b35;
+        }
+
+        .dropdown-item i {
+            margin-right: 0.5rem;
+        }
+
+    .admin-item {
+        font-weight: 500;
+    }
+
+        .admin-item:hover {
+            background: linear-gradient(90deg, #fff3e0 0%, #ffe0b2 100%);
+            color: #ff6b35;
+            padding-left: 2rem;
+        }
+
+    .btn-register-nav {
+        background: linear-gradient(135deg, #ffc107 0%, #ff6b35 100%);
+        border-radius: 20px;
+        padding: 0.5rem 1.5rem !important;
+        margin-left: 0.5rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+        .btn-register-nav:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 193, 7, 0.4);
+            color: white !important;
+        }
+
+    #logoutForm {
+        margin: 0;
+    }
+
+        #logoutForm button {
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+        }
+</style>

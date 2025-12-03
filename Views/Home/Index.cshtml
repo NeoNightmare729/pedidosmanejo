@@ -1,0 +1,215 @@
+﻿@model List<PedidosManejo.Models.menu>
+
+@{
+    ViewBag.Title = "Tus comidas en un instante";
+}
+<link href="~/Content/css/home.css" rel="stylesheet" />
+<link href="~/Content/bootstrap/bootstrap.reboot.css" rel="stylesheet" />
+<script src="~/Content/Scripts/carrito.js"></script>
+
+<!-- =========================== -->
+<!-- HERO PRINCIPAL -->
+<!-- =========================== -->
+<header class="hero bg-dark text-white text-center py-5" style="background: linear-gradient(135deg, #ff6b35 0%, #dc3545 100%); min-height: 60vh; display: flex; align-items: center; justify-content: center;">
+    <div class="container">
+        <h1 class="display-3 fw-bold mb-3">Tus comidas en un instante</h1>
+        <p class="lead fs-4 mb-4">
+            Del restaurante directo a tu mesa, rápido, fresco y delicioso.
+        </p>
+        <a href="@Url.Action("Index", "menus")" class="btn btn-warning btn-lg px-5 py-3 rounded-pill shadow">
+            Ver Menú Completo
+        </a>
+    </div>
+</header>
+
+<!-- =========================== -->
+<!-- SECCIÓN: SOBRE LA CADENA -->
+<!-- =========================== -->
+<section class="container my-5 py-5">
+    <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold text-danger mb-3">Nuestra Pasión por la Comida</h2>
+        <p class="text-muted fs-5 col-lg-8 mx-auto">
+            Somos una pequeña cadena de restaurantes dedicada a ofrecer platos llenos de sabor,
+            preparados con ingredientes frescos y listos para disfrutar en minutos.
+        </p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-lg rounded-3 hover-lift">
+                <div class="card-body text-center p-4">
+                    <div class="display-1 mb-3">🍔</div>
+                    <h5 class="card-title fw-bold mb-3">Comida Rápida Gourmet</h5>
+                    <p class="card-text text-muted">Platos únicos preparados al instante, sin perder calidad.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-lg rounded-3 hover-lift">
+                <div class="card-body text-center p-4">
+                    <div class="display-1 mb-3">🔥</div>
+                    <h5 class="card-title fw-bold mb-3">Sabor Real</h5>
+                    <p class="card-text text-muted">Ingredientes frescos, recetas auténticas y preparación artesanal.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-lg rounded-3 hover-lift">
+                <div class="card-body text-center p-4">
+                    <div class="display-1 mb-3">⏱️</div>
+                    <h5 class="card-title fw-bold mb-3">Entrega Rápida</h5>
+                    <p class="card-text text-muted">Tu comida lista en minutos, sin complicaciones.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- =========================== -->
+<!-- SECCIÓN: PLATOS DESTACADOS -->
+<!-- =========================== -->
+<section class="bg-light py-5" id="menu">
+    <div class="container my-5">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-bold text-warning mb-3">Nuestros Platos Destacados</h2>
+            <p class="text-muted fs-5">Los favoritos más recientes de nuestro menú.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <div class="col-lg-4 col-md-6">
+                        <div class="card h-100 border-0 shadow-lg rounded-3 overflow-hidden hover-lift">
+                            <img src="@(item.Imagen != null && item.Imagen.Length > 0
+                                ? "data:image/jpeg;base64," + Convert.ToBase64String(item.Imagen)
+                                : Url.Content("~/Content/img/placeholder.png"))"
+                                 class="card-img-top"
+                                 alt="@item.NombrePlato"
+                                 style="height: 250px; object-fit: cover;">
+
+                            <div class="card-body d-flex flex-column">
+                                <h5 class="card-title fw-bold mb-2">@item.NombrePlato</h5>
+                                <p class="card-text text-muted flex-grow-1">@item.Descripcion</p>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <span class="fs-4 fw-bold text-success">$@item.Precio.ToString("F2")</span>
+                                </div>
+                                <button class="btn btn-warning btn-lg w-100 rounded-pill shadow-sm"
+                                        onclick="addToCartAndRedirect('@item.NombrePlato', @item.Precio, @item.MenuID)">
+                                    <i class="bi bi-cart-plus"></i> Ordenar ahora
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <div class="alert alert-info text-center" role="alert">
+                        <i class="bi bi-info-circle"></i> No hay platos disponibles en este momento.
+                    </div>
+                </div>
+            }
+        </div>
+        </div>
+        <!-- Botón para ver menú completo -->
+
+</section>
+
+<!-- =========================== -->
+<!-- SECCIÓN: RESEÑAS -->
+<!-- =========================== -->
+<section class="container my-5 py-5">
+    <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold text-danger mb-3">Lo que dicen nuestros clientes</h2>
+    </div>
+
+    <div class="row g-4">
+        <!-- Ejemplo de reseña -->
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <span class="text-warning">★★★★★</span>
+                    </div>
+                    <p class="card-text text-muted fst-italic">
+                        "La comida es excelente y llega súper rápido. ¡Totalmente recomendado!"
+                    </p>
+                    <div class="d-flex align-items-center mt-3">
+                        <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
+                             style="width: 50px; height: 50px;">
+                            MR
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0 fw-bold">María Rodríguez</h6>
+                            <small class="text-muted">Cliente frecuente</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <span class="text-warning">★★★★★</span>
+                    </div>
+                    <p class="card-text text-muted fst-italic">
+                        "Sabores increíbles y atención de primera. Mi lugar favorito."
+                    </p>
+                    <div class="d-flex align-items-center mt-3">
+                        <div class="bg-success rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
+                             style="width: 50px; height: 50px;">
+                            JL
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0 fw-bold">Juan López</h6>
+                            <small class="text-muted">Cliente frecuente</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                        <span class="text-warning">★★★★☆</span>
+                    </div>
+                    <p class="card-text text-muted fst-italic">
+                        "Muy buenos platillos, precios justos y servicio rápido."
+                    </p>
+                    <div class="d-flex align-items-center mt-3">
+                        <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center text-white fw-bold"
+                             style="width: 50px; height: 50px;">
+                            AS
+                        </div>
+                        <div class="ms-3">
+                            <h6 class="mb-0 fw-bold">Ana Sánchez</h6>
+                            <small class="text-muted">Cliente nueva</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- CSS adicional para efectos hover -->
+<style>
+    .hover-lift {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .hover-lift:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 1rem 3rem rgba(0,0,0,.175) !important;
+        }
+</style>

@@ -1,0 +1,90 @@
+﻿@model PedidosManejo.Models.Contactos
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>Contactos</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Telefono)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Asunto)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Asunto)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Mensaje)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Mensaje)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.FechaEnvio)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.FechaEnvio)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Estado)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Estado)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.usuario.Nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.usuario.Nombre)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ContactoID }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>

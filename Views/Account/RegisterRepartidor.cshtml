@@ -1,0 +1,131 @@
+﻿@model PedidosManejo.Models.RegisterRepartidorViewModel
+@{
+    ViewBag.Title = "Registrar Repartidor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link href="~/Content/css/register-repartidor.css" rel="stylesheet" />
+
+<div class="repartidor-container">
+    <div class="repartidor-card">
+        <!-- Header -->
+        <div class="repartidor-header">
+            <div class="header-icon">
+                <i class="bi bi-person-plus-fill"></i>
+            </div>
+            <h2 class="repartidor-title">Registrar Nuevo Repartidor</h2>
+            <p class="repartidor-subtitle">Completa los datos del nuevo repartidor</p>
+        </div>
+
+        <!-- Body -->
+        <div class="repartidor-body">
+            @using (Html.BeginForm("RegisterRepartidor", "Account", FormMethod.Post, new { @class = "repartidor-form", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                        @TempData["ErrorMessage"]
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                }
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger validation-summary-errors" })
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="bi bi-person"></i>
+                                @Html.DisplayNameFor(m => m.Nombre)
+                            </label>
+                            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control", placeholder = "Nombre completo del repartidor" })
+                            @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="bi bi-envelope"></i>
+                                @Html.DisplayNameFor(m => m.Email)
+                            </label>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", type = "email", placeholder = "correo@ejemplo.com" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="bi bi-lock"></i>
+                                @Html.DisplayNameFor(m => m.Password)
+                            </label>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Mínimo 6 caracteres" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="bi bi-lock-fill"></i>
+                                @Html.DisplayNameFor(m => m.ConfirmPassword)
+                            </label>
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", placeholder = "Repite la contraseña" })
+                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="bi bi-truck"></i>
+                                @Html.DisplayNameFor(m => m.Vehiculo)
+                            </label>
+                            @Html.DropDownListFor(m => m.Vehiculo, new SelectList(new[] {
+                                "Motocicleta",
+                                "Bicicleta",
+                                "Auto",
+                                "Scooter eléctrico"
+                            }), "Selecciona un vehículo", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Vehiculo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-label">
+                                <i class="bi bi-check-circle"></i>
+                                @Html.DisplayNameFor(m => m.Estado)
+                            </label>
+                            @Html.DropDownListFor(m => m.Estado, new SelectList(new[] {
+                                "Disponible",
+                                "Ocupado",
+                                "Inactivo"
+                            }), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-repartidor">
+                        <i class="bi bi-check-circle me-2"></i>
+                        Registrar Repartidor
+                    </button>
+                    @Html.ActionLink("Cancelar", "Index", "repartidors", null, new { @class = "btn btn-secondary" })
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,65 @@
+﻿/* =========================== */
+/* ESTILOS PARA GESTIÓN DE CUENTA */
+/* =========================== */
+
+.manage-hero {
+    min-height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-item {
+    padding: 1rem;
+    border-radius: 12px;
+    background: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+    .info-item:hover {
+        background: #e9ecef;
+        transform: translateY(-2px);
+    }
+
+.info-value {
+    color: #333;
+    margin-bottom: 0;
+}
+
+.card {
+    transition: all 0.3s ease;
+}
+
+.btn {
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ff6b35 0%, #dc3545 100%);
+    border: none;
+    color: white;
+}
+
+    .btn-warning:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+    }
+
+.btn-outline-danger:hover {
+    background: #dc3545;
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .info-item {
+        text-align: center;
+    }
+
+    .btn-lg {
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+    }
+}

@@ -1,0 +1,42 @@
+﻿@model PedidosManejo.Models.asignacionpedido
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>asignacionpedido</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.pedido.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.pedido.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.repartidor.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.repartidor.Estado)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AsignacionID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
