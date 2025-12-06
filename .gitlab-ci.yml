@@ -1,0 +1,89 @@
+# Pipeline CI/CD para proyecto ASP.NET
+# Ingeniería de Software - UPEC
+
+# Definir la imagen Docker que se usará (contiene .NET SDK)
+image: mcr.microsoft.com/dotnet/sdk:8.0
+
+# Definir las etapas del pipeline
+stages:
+  - build      # Compilación
+  - test       # Pruebas
+  - deploy     # Despliegue (preparado para futuro)
+
+# Variables globales
+variables:
+  PROJECT_NAME: "PedidosManejo"  # Cambia esto por el nombre de tu proyecto
+  SOLUTION_FILE: "*PedidosManejo.sln"       # Archivo de solución
+
+# Cache para optimizar tiempos de compilación
+cache:
+  paths:
+    - .nuget/
+    - obj/
+    - bin/
+
+# ==========================================
+# STAGE 1: BUILD (Compilación)
+# ==========================================
+build_project:
+  stage: build
+  script:
+    - echo "Restaurando dependencias NuGet..."
+    - dotnet restore $SOLUTION_FILE
+    - echo "Compilando el proyecto..."
+    - dotnet build $SOLUTION_FILE --configuration Release --no-restore
+  artifacts:
+    paths:
+      - bin/
+      - obj/
+    expire_in: 1 hour
+  only:
+    - main
+    - backend/*
+    - frontend/*
+
+# ==========================================
+# STAGE 2: TEST (Pruebas)
+# ==========================================
+test_project:
+  stage: test
+  script:
+    - echo "Ejecutando pruebas unitarias..."
+    - dotnet test $SOLUTION_FILE --no-restore --verbosity normal
+  dependencies:
+    - build_project
+  only:
+    - main
+    - backend/*
+    - frontend/*
+
+# ==========================================
+# STAGE 3: DEPLOY (Despliegue - Preparado)
+# ==========================================
+deploy_staging:
+  stage: deploy
+  script:
+    - echo "Preparando para despliegue..."
+    - dotnet publish $SOLUTION_FILE --configuration Release --output ./publish
+    - echo "Proyecto listo para desplegar"
+  artifacts:
+    paths:
+      - publish/
+    expire_in: 1 week
+  only:
+    - main
+  when: manual  # Requiere aprobación manual para ejecutarse
+
+# ==========================================
+# Job adicional: Code Quality Check
+# ==========================================
+code_quality:
+  stage: test
+  script:
+    - echo "Analizando calidad del código..."
+    - dotnet format --verify-no-changes --verbosity diagnostic || true
+  allow_failure: true
+  only:
+    - main
+    - backend/*
+    - frontend/*
