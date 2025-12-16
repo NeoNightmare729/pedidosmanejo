@@ -86,7 +86,7 @@
                                     <div class="history-content">
                                         <div class="history-top">
                                             <span class="state-change">@item.EstadoAnterior → @item.EstadoNuevo</span>
-                                            <span class="history-date">@item.FechaCambio.ToString("dd MMM yyyy HH:mm")</span>
+                                            <span class="history-date">@(item.FechaCambio.HasValue ? item.FechaCambio.Value.ToString("dd MMM yyyy HH:mm") : "Fecha no disponible")</span>
                                         </div>
                                         <p class="history-user">
                                             <i class="bi bi-person-check"></i>
