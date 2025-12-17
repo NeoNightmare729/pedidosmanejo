@@ -170,6 +170,26 @@ function toggleCart() {
     window.location.href = '/Home/Cart';
 }
 
+// Redirigir a la pantalla de checkout si el carrito tiene productos
+function goToCheckout() {
+    const cart = getCartItems();
+
+    if (!cart || cart.length === 0) {
+        showNotification('Tu carrito está vacío', 'warning');
+        return;
+    }
+
+    if (!isUserAuthenticated()) {
+        showNotification('Debes iniciar sesión para proceder al pago', 'warning');
+        setTimeout(() => {
+            window.location.href = '/Account/Login?returnUrl=' + encodeURIComponent('/Checkout');
+        }, 1500);
+        return;
+    }
+
+    window.location.href = '/Checkout';
+}
+
 // Función para verificar si el usuario está autenticado
 function isUserAuthenticated() {
     // Verificar si hay un elemento que indique que el usuario está autenticado
