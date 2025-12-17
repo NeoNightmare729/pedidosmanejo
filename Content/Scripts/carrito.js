@@ -140,6 +140,9 @@ function clearCart() {
     saveCartToStorage();
     calculateCartTotal();
     updateCartUI();
+    if (document.getElementById('cartItemsContainer')) {
+        loadCartPage();
+    }
     showNotification('Carrito vaciado', 'info');
 }
 
@@ -364,7 +367,7 @@ function addToCartFromHome(productName, productPrice, productId = null) {
     updateCartUI();
     showNotification('Producto agregado al carrito', 'success');
 }
-function proceedToCheckout() {
+async function proceedToCheckout() {
     const cart = getCartItems();
 
     if (cart.length === 0) {
@@ -372,7 +375,6 @@ function proceedToCheckout() {
         return;
     }
 
-    // Verificar autenticación antes de proceder al pago
     if (!isUserAuthenticated()) {
         showNotification('Debes iniciar sesión para realizar el pago', 'warning');
         setTimeout(() => {
@@ -381,20 +383,40 @@ function proceedToCheckout() {
         return;
     }
 
-    showNotification('Procesando pedido...', 'success');
-    // Aquí puedes redirigir a la página de checkout
-    // window.location.href = '/Checkout/Index';
-}
-function proceedToCheckout() {
-    const cart = getCartItems();
+    const token = document.querySelector('input[name="__RequestVerificationToken"]')?.value;
+    const body = new URLSearchParams();
+    body.append('cartJson', JSON.stringify(cart));
 
-    if (cart.length === 0) {
-        showNotification('Tu carrito está vacío', 'warning');
-        return;
+    try {
+        const response = await fetch('/facturas/Checkout', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                ...(token ? { 'RequestVerificationToken': token } : {})
+            },
+            credentials: 'same-origin',
+            body: body.toString()
+        });
+
+        const contentType = response.headers.get('content-type') || '';
+        if (!contentType.includes('application/json')) {
+            window.location.href = '/Account/Login?returnUrl=' + encodeURIComponent('/Home/Cart');
+            return;
+        }
+
+        const data = await response.json();
+
+        if (data.success && data.redirectUrl) {
+            showNotification('Pedido procesado correctamente', 'success');
+            clearCart();
+            window.location.href = data.redirectUrl;
+        } else {
+            showNotification(data.message || 'No se pudo procesar el pago', 'error');
+        }
+    } catch (error) {
+        console.error('Error al procesar el pago:', error);
+        showNotification('Error al procesar el pago. Inténtalo nuevamente.', 'error');
     }
-
-    // Redirigir a la página de checkout
-    window.location.href = '@Url.Action("Index", "Checkout")';
 }
 // Inicializar cuando el DOM esté listo
 document.addEventListener('DOMContentLoaded', function () {
