@@ -11,7 +11,6 @@ using System.Web.Mvc;
 
 namespace PedidosManejo.Controllers
 {
-    [Prohibido]
     public class historialpedidoesController : Controller
     {
         private SQLmanejopedidosEntities1 db = new SQLmanejopedidosEntities1();

@@ -219,7 +219,7 @@
                 const imgHeight = canvas.height * imgWidth / canvas.width;
 
                 pdf.addImage(imgData, 'PNG', margin, margin, imgWidth, imgHeight);
-                pdf.save(`Factura-@Model.FacturaID.pdf`);
+                pdf.save(`Factura-@Model.FacturaID`);
             });
         }
 

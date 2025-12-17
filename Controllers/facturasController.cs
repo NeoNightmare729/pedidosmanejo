@@ -1,144 +1,98 @@
-﻿using PedidosManejo.Filters;
-using PedidosManejo.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
+using PedidosManejo.Models;
 
 namespace PedidosManejo.Controllers
 {
-    [Prohibido]
-    public class facturasController : Controller
+    public partial class facturasController : Controller
     {
-        private SQLmanejopedidosEntities1 db = new SQLmanejopedidosEntities1();
-
-        // GET: facturas
-        public ActionResult Index()
+        private SQLmanejopedidosEntities1 db = new SQLmanejopedidosEntities1();        // DTO local para recibir el carrito
+        public class CartItemDto
         {
-            var factura = db.factura.Include(f => f.pedido).Include(f => f.usuario);
-            return View(factura.ToList());
+            public int id { get; set; }
+            public string name { get; set; }
+            public decimal price { get; set; }
+            public int quantity { get; set; }
         }
 
-        // GET: facturas/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            factura factura = db.factura
-                .Include(f => f.usuario)
-                .Include(f => f.pedido.restaurante)
-                .Include(f => f.pedido.detallepedido.Select(d => d.menu))
-                .FirstOrDefault(f => f.FacturaID == id);
-
-            if (factura == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View(factura);
-        }
-
-        // GET: facturas/Create
-        public ActionResult Create()
-        {
-            ViewBag.PedidoID = new SelectList(db.pedido, "PedidoID", "Estado");
-            ViewBag.UsuarioID = new SelectList(db.usuario, "UsuarioID", "Nombre");
-            return View();
-        }
-
-        // POST: facturas/Create
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "FacturaID,PedidoID,UsuarioID,Total,Fecha,MetodoPago")] factura factura)
+        [Authorize]
+        public ActionResult Checkout(string cartJson)
         {
-            if (ModelState.IsValid)
-            {
-                db.factura.Add(factura);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
+            if (string.IsNullOrWhiteSpace(cartJson))
+                return Json(new { success = false, message = "Carrito vacío" });
 
-            ViewBag.PedidoID = new SelectList(db.pedido, "PedidoID", "Estado", factura.PedidoID);
-            ViewBag.UsuarioID = new SelectList(db.usuario, "UsuarioID", "Nombre", factura.UsuarioID);
-            return View(factura);
-        }
+            var items = JsonConvert.DeserializeObject<List<CartItemDto>>(cartJson);
+            if (items == null || items.Count == 0)
+                return Json(new { success = false, message = "Carrito vacío" });
 
-        // GET: facturas/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
+            using (var tx = db.Database.BeginTransaction())
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            factura factura = db.factura.Find(id);
-            if (factura == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.PedidoID = new SelectList(db.pedido, "PedidoID", "Estado", factura.PedidoID);
-            ViewBag.UsuarioID = new SelectList(db.usuario, "UsuarioID", "Nombre", factura.UsuarioID);
-            return View(factura);
-        }
+                try
+                {
+                    // Calcular totales
+                    decimal subtotal = items.Sum(i => i.price * i.quantity);
+                    decimal shipping = subtotal > 0 ? 2.50m : 0m;
+                    decimal tax = subtotal * 0.12m;
+                    decimal total = subtotal + shipping + tax;
 
-        // POST: facturas/Edit/5
-        // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que quiere enlazarse. Para obtener 
-        // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "FacturaID,PedidoID,UsuarioID,Total,Fecha,MetodoPago")] factura factura)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(factura).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.PedidoID = new SelectList(db.pedido, "PedidoID", "Estado", factura.PedidoID);
-            ViewBag.UsuarioID = new SelectList(db.usuario, "UsuarioID", "Nombre", factura.UsuarioID);
-            return View(factura);
-        }
+                    // Obtener usuario por nombre (ajusta según cómo guardes la identidad)
+                    var usuario = db.usuario.FirstOrDefault(u => u.CorreoElectronico == User.Identity.Name);
 
-        // GET: facturas/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            factura factura = db.factura.Find(id);
-            if (factura == null)
-            {
-                return HttpNotFound();
-            }
-            return View(factura);
-        }
+                    // Crear pedido
+                    var pedido = new pedido
+                    {
+                        UsuarioID = usuario?.UsuarioID,
+                        FechaHora = DateTime.Now,
+                        Estado = "Pendiente",
+                        Total = total
+                    };
+                    db.pedido.Add(pedido);
+                    db.SaveChanges();
 
-        // POST: facturas/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            factura factura = db.factura.Find(id);
-            db.factura.Remove(factura);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+                    // Crear detallepedido (si tienes MenuIDs reales, pásalos desde el cliente)
+                    foreach (var it in items)
+                    {
+                        var detalle = new detallepedido
+                        {
+                            PedidoID = pedido.PedidoID,
+                            MenuID = null, // si tienes menu IDs, mapéalos desde it.id
+                            Cantidad = it.quantity,
+                            PrecioUnitario = it.price,
+                            Subtotal = it.price * it.quantity
+                        };
+                        db.detallepedido.Add(detalle);
+                    }
+                    db.SaveChanges();
 
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                db.Dispose();
+                    // Crear factura
+                    var factura = new factura
+                    {
+                        PedidoID = pedido.PedidoID,
+                        UsuarioID = usuario?.UsuarioID,
+                        Total = total,
+                        Fecha = DateTime.Now,
+                        MetodoPago = "Pago Web"
+                    };
+                    db.factura.Add(factura);
+                    db.SaveChanges();
+
+                    tx.Commit();
+
+                    // Devolver URL de redirección para que el cliente la use
+                    return Json(new { success = true, redirectUrl = Url.Action("Details", "facturas", new { id = factura.FacturaID }) });
+                }
+                catch (Exception ex)
+                {
+                    tx.Rollback();
+                    // loguear ex, devolver error amigable
+                    return Json(new { success = false, message = "Error procesando el pedido" });
+                }
             }
-            base.Dispose(disposing);
         }
     }
 }
