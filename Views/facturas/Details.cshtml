@@ -1,58 +1,241 @@
-﻿@model PedidosManejo.Models.factura
+@model PedidosManejo.Models.factura
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Factura";
 }
 
-<h2>Details</h2>
+<link href="~/Content/css/factura.css" rel="stylesheet" />
 
-<div>
-    <h4>factura</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Total)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Total)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Fecha)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Fecha)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MetodoPago)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MetodoPago)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.pedido.Estado)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.pedido.Estado)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.usuario.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.usuario.Nombre)
-        </dd>
-
-    </dl>
+<div class="factura-hero shadow-sm rounded mb-4">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-2 text-md-start mb-3 mb-md-0">
+                <i class="bi bi-receipt success-icon"></i>
+            </div>
+            <div class="col-md-7 text-md-start">
+                <h1 class="factura-title">Factura #@Model.FacturaID</h1>
+                <p class="factura-subtitle mb-0">Resumen detallado de tu pedido con opciones de pago y descarga en PDF.</p>
+            </div>
+            <div class="col-md-3 text-md-end">
+                <button class="btn btn-light btn-lg w-100 mb-2" onclick="generarPDF()">
+                    <i class="bi bi-filetype-pdf me-2"></i>Descargar PDF
+                </button>
+                <button class="btn btn-outline-light btn-lg w-100" data-bs-toggle="modal" data-bs-target="#pagoModal">
+                    <i class="bi bi-credit-card me-2"></i>Proceder al pago
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.FacturaID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<div class="row" id="factura-preview">
+    <div class="col-lg-8 mb-4">
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-warning">
+                <div class="d-flex justify-content-between align-items-center text-white">
+                    <div>
+                        <small class="text-uppercase">Factura</small>
+                        <h3 class="mb-0">Monto total: @Model.Total.ToString("C")</h3>
+                    </div>
+                    <span class="badge bg-light text-dark">@Model.Fecha?.ToString("dd MMM yyyy")</span>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6 class="text-uppercase text-muted">Cliente</h6>
+                        <p class="mb-0 fw-semibold">@Model.usuario?.Nombre ?? "Consumidor final"</p>
+                        <small class="text-muted">Pedido #@Model.PedidoID</small>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <h6 class="text-uppercase text-muted">Restaurante</h6>
+                        <p class="mb-0 fw-semibold">@Model.pedido?.restaurante?.Nombre ?? "Restaurante no especificado"</p>
+                        <small class="text-muted">Método de pago: @Model.MetodoPago</small>
+                    </div>
+                </div>
+
+                <div class="table-responsive mb-4">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Producto</th>
+                                <th class="text-center">Cant.</th>
+                                <th class="text-end">Precio</th>
+                                <th class="text-end">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.pedido?.detallepedido != null && Model.pedido.detallepedido.Any())
+                            {
+                                foreach (var detalle in Model.pedido.detallepedido)
+                                {
+                                    <tr>
+                                        <td class="fw-semibold">@detalle.menu?.Nombre ?? "Producto"</td>
+                                        <td class="text-center">@detalle.Cantidad</td>
+                                        <td class="text-end">@detalle.PrecioUnitario.ToString("C")</td>
+                                        <td class="text-end">@detalle.Subtotal.ToString("C")</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-4">
+                                        No hay detalles de productos asociados a este pedido.
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded">
+                            <small class="text-uppercase text-muted">Estado del pedido</small>
+                            <div class="d-flex align-items-center mt-2">
+                                <i class="bi bi-flag-fill text-success me-2"></i>
+                                <span class="fw-semibold">@Model.pedido?.Estado ?? "En preparación"</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded">
+                            <small class="text-uppercase text-muted">Método de pago</small>
+                            <div class="d-flex align-items-center mt-2">
+                                <i class="bi bi-wallet2 text-primary me-2"></i>
+                                <span class="fw-semibold">@Model.MetodoPago</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded text-end">
+                            <small class="text-uppercase text-muted">Total</small>
+                            <h4 class="mb-0">@Model.Total.ToString("C")</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer bg-white d-flex justify-content-between">
+                @Html.ActionLink("Regresar", "Index", null, new { @class = "btn btn-outline-secondary" })
+                <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#pagoModal">
+                    <i class="bi bi-lock-fill me-2"></i>Proceder al pago seguro
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="bi bi-shield-check me-2"></i>Resumen del pago</h5>
+            </div>
+            <div class="card-body">
+                <div class="payment-method mb-3">
+                    <i class="bi bi-credit-card-2-front fs-1 text-success mb-2"></i>
+                    <h6 class="fw-bold">Pago rápido y seguro</h6>
+                    <p class="text-muted small mb-0">Usa tus datos guardados o ingresa un método nuevo para finalizar.</p>
+                </div>
+                <ul class="list-group list-group-flush mb-3">
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Subtotal</span>
+                        <span class="fw-semibold">@Model.Total.ToString("C")</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Impuestos (incluidos)</span>
+                        <span class="fw-semibold">0.00</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span class="fw-bold">Total a pagar</span>
+                        <span class="fw-bold text-success">@Model.Total.ToString("C")</span>
+                    </li>
+                </ul>
+                <button class="btn btn-primary w-100 mb-2" data-bs-toggle="modal" data-bs-target="#pagoModal">
+                    <i class="bi bi-credit-card me-2"></i>Confirmar y pagar
+                </button>
+                <button class="btn btn-outline-secondary w-100" onclick="generarPDF()">
+                    <i class="bi bi-download me-2"></i>Guardar como PDF
+                </button>
+            </div>
+        </div>
+
+        <div class="alert alert-info shadow-sm" role="alert">
+            <div class="d-flex align-items-start">
+                <i class="bi bi-info-circle-fill me-2"></i>
+                <div>
+                    <strong>Consejo:</strong> Descarga el comprobante en PDF y compártelo con tu equipo de contabilidad.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de pago -->
+<div class="modal fade" id="pagoModal" tabindex="-1" aria-labelledby="pagoModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="pagoModalLabel">Proceder al pago</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p class="text-muted">Confirmaremos el cargo en tu método de pago seleccionado.</p>
+                <div class="mb-3">
+                    <label class="form-label">Método de pago</label>
+                    <select class="form-select">
+                        <option selected>@Model.MetodoPago</option>
+                        <option>Tarjeta de crédito</option>
+                        <option>Transferencia bancaria</option>
+                        <option>Pago contra entrega</option>
+                    </select>
+                </div>
+                <div class="alert alert-success" role="alert">
+                    <i class="bi bi-check-circle me-2"></i>El pago es seguro y puedes descargar el PDF como comprobante.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-success" onclick="simularPago()">Confirmar pago</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" integrity="sha512-BNa5l8zR+GkNcfkKQ+uIu7ocWiJP2yPBa15Kq4i2eM0C1SDXx+5vLwHXkj7YqJxFKCROmR5iu6Y8zYvVIGUgZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-VzN2QJxzQZAj5KROGmJ7kzDun4G6ku7xRuk9yOL0EJSnW7O4IfUETMsCJOdmZbI0d/bNQhkbIUodGTLqZ28Ykg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script>
+        function generarPDF() {
+            const { jsPDF } = window.jspdf;
+            const facturaElement = document.querySelector('#factura-preview');
+
+            html2canvas(facturaElement, { scale: 2 }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'pt', 'a4');
+                const pageWidth = pdf.internal.pageSize.getWidth();
+                const pageHeight = pdf.internal.pageSize.getHeight();
+                const margin = 20;
+                const imgWidth = pageWidth - margin * 2;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+
+                pdf.addImage(imgData, 'PNG', margin, margin, imgWidth, imgHeight);
+                pdf.save(`Factura-@Model.FacturaID`);
+            });
+        }
+
+        function simularPago() {
+            const modal = bootstrap.Modal.getInstance(document.getElementById('pagoModal'));
+            modal.hide();
+
+            const alertPlaceholder = document.createElement('div');
+            alertPlaceholder.className = 'alert alert-success alert-dismissible fade show mt-3';
+            alertPlaceholder.role = 'alert';
+            alertPlaceholder.innerHTML = `
+                <strong>¡Pago confirmado!</strong> Tu factura #@Model.FacturaID se ha procesado correctamente.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            `;
+
+            document.querySelector('#factura-preview .card-body').prepend(alertPlaceholder);
+        }
+    </script>
+}

@@ -276,7 +276,7 @@
     <Content Include="Content\css\home.css" />
     <Content Include="Content\css\Login.css" />
     <Content Include="Content\css\manege.css" />
-    <Content Include="Content\css\menu-edit-style.css" />
+    <Content Include="Content\css\menu-edit-styles.css" />
     <Content Include="Content\css\Menu.css" />
     <Content Include="Content\css\register-repartidor.css" />
     <Content Include="Content\css\Register.css" />
@@ -325,7 +325,6 @@
     <Content Include="Views\Contactos\Details.cshtml" />
     <Content Include="Views\Contactos\Edit.cshtml" />
     <Content Include="Views\Contactos\Index.cshtml" />
-    <None Include="Views\Home\Cart.cshtml" />
     <Content Include="Views\menus\Menu.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -421,6 +420,7 @@
     <Content Include="Views\rols\Details.cshtml" />
     <Content Include="Views\rols\Edit.cshtml" />
     <Content Include="Views\rols\Index.cshtml" />
+    <Content Include="Views\Home\Cart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
