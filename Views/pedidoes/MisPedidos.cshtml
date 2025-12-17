@@ -1,0 +1,111 @@
+@model IEnumerable<PedidosManejo.Models.pedido>
+@{
+    ViewBag.Title = "Mis Pedidos";
+    bool esAdministrador = ViewBag.EsAdministrador ?? false;
+    Func<string, string> obtenerClaseEstado = estado =>
+    {
+        if (string.IsNullOrWhiteSpace(estado)) return "status-pill status-default";
+        switch (estado.Trim().ToLower())
+        {
+            case "creado":
+            case "pendiente":
+                return "status-pill status-pending";
+            case "en proceso":
+            case "preparando":
+                return "status-pill status-progress";
+            case "entregado":
+            case "completado":
+                return "status-pill status-success";
+            case "cancelado":
+                return "status-pill status-cancelled";
+            default:
+                return "status-pill status-default";
+        }
+    };
+}
+<link href="~/Content/css/MisPedidos.css" rel="stylesheet" />
+
+<section class="orders-hero">
+    <div class="container">
+        <p class="eyebrow">Resumen Personal</p>
+        <h1>Mis pedidos</h1>
+        <p class="subtitle">
+            Consulta el estado y el historial de tus pedidos. @(!esAdministrador ? "Solo tú puedes ver esta información." : "Como administrador, puedes ver todos los pedidos registrados.")
+        </p>
+    </div>
+</section>
+
+<section class="orders-wrapper container">
+    @if (Model == null || !Model.Any())
+    {
+        <div class="empty-state">
+            <div class="icon-circle">
+                <i class="bi bi-bag-x"></i>
+            </div>
+            <h3>No tienes pedidos registrados</h3>
+            <p>Cuando realices tus pedidos aparecerán aquí con su historial de cambios.</p>
+            <a href="@Url.Action("Index", "menus")" class="btn btn-primary">Explorar menú</a>
+        </div>
+    }
+    else
+    {
+        foreach (var pedido in Model)
+        {
+            var estadoClase = obtenerClaseEstado(pedido.Estado);
+            <div class="order-card">
+                <div class="order-header">
+                    <div>
+                        <p class="label">Pedido #@pedido.PedidoID</p>
+                        <h4>@(pedido.restaurante?.Nombre ?? "Restaurante no disponible")</h4>
+                        <div class="order-meta">
+                            <span><i class="bi bi-calendar3"></i> @(pedido.FechaHora?.ToString("dd MMM yyyy, HH:mm") ?? "Fecha no registrada")</span>
+                            <span><i class="bi bi-currency-dollar"></i> @pedido.Total?.ToString("F2") ?? "0.00"</span>
+                            @if (esAdministrador && pedido.usuario != null)
+                            {
+                                <span><i class="bi bi-person"></i> @pedido.usuario.Nombre</span>
+                            }
+                        </div>
+                    </div>
+                    <div class="order-status">
+                        <span class="@estadoClase">@(!string.IsNullOrWhiteSpace(pedido.Estado) ? pedido.Estado : "Sin estado")</span>
+                    </div>
+                </div>
+
+                <div class="history-section">
+                    <div class="history-header">
+                        <h5>Historial</h5>
+                        <p>Seguimiento de cambios en el pedido</p>
+                    </div>
+                    @if (pedido.historialpedido != null && pedido.historialpedido.Any())
+                    {
+                        <ul class="history-timeline">
+                            @foreach (var item in pedido.historialpedido.OrderByDescending(h => h.FechaCambio))
+                            {
+                                <li class="history-item">
+                                    <div class="history-dot"></div>
+                                    <div class="history-content">
+                                        <div class="history-top">
+                                            <span class="state-change">@item.EstadoAnterior → @item.EstadoNuevo</span>
+                                            <span class="history-date">@(item.FechaCambio.HasValue ? item.FechaCambio.Value.ToString("dd MMM yyyy HH:mm") : "Fecha no disponible")</span>
+                                        </div>
+                                        <p class="history-user">
+                                            <i class="bi bi-person-check"></i>
+                                            @(item.usuario != null ? item.usuario.Nombre : "Usuario no registrado")
+                                        </p>
+                                    </div>
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <div class="history-empty">
+                            <i class="bi bi-clock-history"></i>
+                            <p>Este pedido aún no tiene cambios registrados.</p>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+    }
+</section>

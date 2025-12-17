@@ -276,6 +276,7 @@
     <Content Include="Content\css\home.css" />
     <Content Include="Content\css\Login.css" />
     <Content Include="Content\css\manege.css" />
+    <Content Include="Content\css\menu-edit-style.css" />
     <Content Include="Content\css\Menu.css" />
     <Content Include="Content\css\register-repartidor.css" />
     <Content Include="Content\css\Register.css" />
