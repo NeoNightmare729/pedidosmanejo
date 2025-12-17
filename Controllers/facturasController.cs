@@ -30,11 +30,17 @@ namespace PedidosManejo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            factura factura = db.factura.Find(id);
+            factura factura = db.factura
+                .Include(f => f.usuario)
+                .Include(f => f.pedido.restaurante)
+                .Include(f => f.pedido.detallepedido.Select(d => d.menu))
+                .FirstOrDefault(f => f.FacturaID == id);
+
             if (factura == null)
             {
                 return HttpNotFound();
             }
+
             return View(factura);
         }
 
