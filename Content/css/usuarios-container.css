@@ -1,0 +1,523 @@
+﻿/* =================================
+   USUARIOS - ESTILOS PERSONALIZADOS
+   COLORES: ROJO, AMARILLO Y BLANCO
+   ================================= */
+
+/* Contenedor principal */
+.usuarios-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* =================================
+   HEADER DE PÁGINA
+   ================================= */
+.page-header {
+    background: linear-gradient(135deg, #c60b1e 0%, #ffc400 100%);
+    border-radius: 15px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(198, 11, 30, 0.3);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.page-subtitle {
+    margin: 0.5rem 0 0 0;
+    font-size: 1.1rem;
+    opacity: 0.95;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Botón crear */
+.btn-create {
+    background: white;
+    color: #c60b1e;
+    padding: 0.9rem 2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+    .btn-create:before {
+        content: "\f067";
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+    }
+
+    .btn-create:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        background: #ffc400;
+        color: #c60b1e;
+    }
+
+/* =================================
+   ALERTAS
+   ================================= */
+.alert {
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.alert-success {
+    background: #ffe8a1;
+    border: 2px solid #ffc400;
+    color: #8b6914;
+}
+
+.alert-danger {
+    background: #f8d7da;
+    border: 2px solid #c60b1e;
+    color: #721c24;
+}
+
+.close-alert {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: inherit;
+    opacity: 0.5;
+    transition: opacity 0.3s;
+}
+
+    .close-alert:hover {
+        opacity: 1;
+    }
+
+/* =================================
+   TABLA DE USUARIOS
+   ================================= */
+.table-container {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    border: 3px solid #ffc400;
+}
+
+.usuarios-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+    .usuarios-table thead {
+        background: linear-gradient(135deg, #c60b1e 0%, #aa0916 100%);
+        color: white;
+    }
+
+        .usuarios-table thead th {
+            padding: 1.2rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+            letter-spacing: 0.5px;
+            border-bottom: 4px solid #ffc400;
+        }
+
+    .usuarios-table tbody tr {
+        border-bottom: 1px solid #ffe8a1;
+        transition: all 0.3s ease;
+    }
+
+        .usuarios-table tbody tr:hover {
+            background: #fff9e6;
+            transform: scale(1.01);
+            box-shadow: 0 2px 10px rgba(198, 11, 30, 0.1);
+        }
+
+    .usuarios-table tbody td {
+        padding: 1rem;
+        vertical-align: middle;
+    }
+
+/* Usuario con avatar */
+.user-name {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-weight: 600;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #c60b1e 0%, #ffc400 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border: 2px solid white;
+    box-shadow: 0 2px 8px rgba(198, 11, 30, 0.3);
+}
+
+/* Badges */
+.badge {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.badge-rol {
+    background: #fff3cd;
+    color: #c60b1e;
+    border: 1px solid #ffc400;
+}
+
+.badge-activo {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #28a745;
+}
+
+.badge-inactivo {
+    background: #f8d7da;
+    color: #c60b1e;
+    border: 1px solid #c60b1e;
+}
+
+/* Botones de acción */
+.actions-cell {
+    text-align: center;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.btn-action {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+    .btn-action:before {
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+    }
+
+.btn-edit {
+    background: #fff3cd;
+    color: #c60b1e;
+    border: 1px solid #ffc400;
+}
+
+    .btn-edit:before {
+        content: "\f044";
+    }
+
+    .btn-edit:hover {
+        background: #ffc400;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(255, 196, 0, 0.5);
+    }
+
+.btn-details {
+    background: #fff9e6;
+    color: #856404;
+    border: 1px solid #ffc400;
+}
+
+    .btn-details:before {
+        content: "\f06e";
+    }
+
+    .btn-details:hover {
+        background: #ffc400;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(255, 196, 0, 0.5);
+    }
+
+.btn-delete {
+    background: #f8d7da;
+    color: #c60b1e;
+    border: 1px solid #c60b1e;
+}
+
+    .btn-delete:before {
+        content: "\f2ed";
+    }
+
+    .btn-delete:hover {
+        background: #c60b1e;
+        color: white;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 10px rgba(198, 11, 30, 0.5);
+    }
+
+/* Estado vacío */
+.empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #6c757d;
+}
+
+    .empty-state i {
+        font-size: 5rem;
+        color: #ffe8a1;
+        margin-bottom: 1rem;
+    }
+
+    .empty-state h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: #c60b1e;
+    }
+
+/* =================================
+   FORMULARIO DE EDICIÓN
+   ================================= */
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+.form-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+    border: 3px solid #ffc400;
+}
+
+.form-header {
+    background: linear-gradient(135deg, #c60b1e 0%, #aa0916 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+    border-bottom: 4px solid #ffc400;
+}
+
+    .form-header h2 {
+        margin: 0;
+        font-size: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .form-header p {
+        margin: 0.5rem 0 0 0;
+        opacity: 0.95;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+.form-body {
+    padding: 2.5rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+    .form-row .form-group {
+        flex: 1;
+    }
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #495057;
+    font-size: 0.95rem;
+}
+
+    .form-label i {
+        margin-right: 0.5rem;
+        color: #c60b1e;
+    }
+
+.form-input,
+.form-select {
+    width: 100%;
+    padding: 0.85rem 1rem;
+    border: 2px solid #ffe8a1;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    font-family: inherit;
+}
+
+    .form-input:focus,
+    .form-select:focus {
+        outline: none;
+        border-color: #ffc400;
+        box-shadow: 0 0 0 4px rgba(255, 196, 0, 0.2);
+    }
+
+.form-hint {
+    display: block;
+    margin-top: 0.4rem;
+    color: #6c757d;
+    font-size: 0.85rem;
+}
+
+.validation-error {
+    color: #c60b1e;
+    font-size: 0.85rem;
+    margin-top: 0.4rem;
+    display: block;
+}
+
+/* Password toggle */
+.password-wrapper {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color 0.3s;
+}
+
+    .toggle-password:hover {
+        color: #c60b1e;
+    }
+
+/* Botones de formulario */
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #ffe8a1;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 0.9rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #c60b1e 0%, #aa0916 100%);
+    color: white;
+    box-shadow: 0 4px 15px rgba(198, 11, 30, 0.4);
+}
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(198, 11, 30, 0.5);
+    }
+
+.btn-secondary {
+    background: #ffc400;
+    color: #333;
+    font-weight: 700;
+}
+
+    .btn-secondary:hover {
+        background: #e6b000;
+        transform: translateY(-2px);
+    }
+
+/* =================================
+   RESPONSIVE
+   ================================= */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .page-title {
+        font-size: 1.8rem;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .usuarios-table {
+        font-size: 0.85rem;
+    }
+
+        .usuarios-table thead th,
+        .usuarios-table tbody td {
+            padding: 0.75rem 0.5rem;
+        }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+}
