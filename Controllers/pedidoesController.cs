@@ -13,7 +13,6 @@ using Microsoft.AspNet.Identity;
 
 namespace PedidosManejo.Controllers
 {
-    [Prohibido]
     public class pedidoesController : Controller
     {
         private SQLmanejopedidosEntities1 db = new SQLmanejopedidosEntities1();
@@ -29,8 +28,9 @@ namespace PedidosManejo.Controllers
         public ActionResult MisPedidos()
         {
             bool esAdministrador = EsAdministrador();
+            int usuarioId = 0;
 
-            if (!esAdministrador && !TryGetUsuarioActualId(out var usuarioId))
+            if (!esAdministrador && !TryGetUsuarioActualId(out usuarioId))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
             }
@@ -53,7 +53,6 @@ namespace PedidosManejo.Controllers
             ViewBag.EsAdministrador = esAdministrador;
             return View("MisPedidos", pedidos);
         }
-
         // GET: pedidoes/Details/5
         public ActionResult Details(int? id)
         {

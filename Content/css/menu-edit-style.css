@@ -1,0 +1,110 @@
+﻿/* CSS PARA EDIT DE MENÚS - TEMA ROJO */
+/* Agregar este CSS en tu archivo existente o crear uno nuevo */
+
+/* Card del formulario */
+.card {
+    border-radius: 15px;
+    border: none;
+}
+
+.card-header {
+    border-radius: 15px 15px 0 0 !important;
+    padding: 1.5rem;
+}
+
+    /* Header rojo */
+    .card-header.bg-danger {
+        background: linear-gradient(135deg, #c60b1e 0%, #aa0916 100%) !important;
+    }
+
+/* Inputs y selects con foco */
+.form-control:focus,
+.form-select:focus {
+    border-color: #c60b1e;
+    box-shadow: 0 0 0 0.25rem rgba(198, 11, 30, 0.25);
+}
+
+/* Botones grandes */
+.btn-lg {
+    padding: 0.75rem 2rem;
+    font-size: 1.1rem;
+}
+
+/* Labels del formulario */
+.form-label {
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+    /* Iconos en labels */
+    .form-label i {
+        margin-right: 0.5rem;
+        color: #c60b1e;
+    }
+
+/* Input group (para el precio con símbolo $) */
+.input-group-text {
+    background-color: #e9ecef;
+    font-weight: bold;
+}
+
+/* Botón principal (Guardar) */
+.btn-danger {
+    background: linear-gradient(135deg, #c60b1e 0%, #aa0916 100%);
+    border: none;
+    box-shadow: 0 4px 15px rgba(198, 11, 30, 0.4);
+}
+
+    .btn-danger:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(198, 11, 30, 0.5);
+        background: linear-gradient(135deg, #aa0916 0%, #8a0712 100%);
+    }
+
+/* Botón secundario (Cancelar) */
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+    .btn-secondary:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+    }
+
+/* Preview de imagen */
+.img-thumbnail {
+    max-height: 250px;
+    object-fit: cover;
+    border: 3px solid #c60b1e;
+}
+
+/* Contenedor centrado de la imagen */
+.text-center.p-3 {
+    background-color: #f8f9fa;
+}
+
+/* Texto de ayuda */
+.text-muted {
+    font-size: 0.875rem;
+}
+
+/* Validación de errores en rojo */
+.text-danger {
+    color: #c60b1e !important;
+}
+
+/* Ajustes adicionales para el formulario */
+.container {
+    margin-top: 2rem;
+}
+
+/* Espaciado entre elementos del formulario */
+.row.mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+/* Sombra para el card principal */
+.shadow {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1) !important;
+}
